@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Tag;
+use App\Http\Requests\StoreTagRequest;
 
 class TagController extends Controller
 {
@@ -12,9 +14,9 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Tag $tag)
     {
-        //
+        return response()->api($tag->all());
     }
 
     /**
@@ -30,12 +32,16 @@ class TagController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreTagRequest  $request
+     * @param  \App\Models\Tag $tag
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTagRequest $request, Tag $tag)
     {
-        //
+        $tag->tag_name = $request->tag_name;
+        $tag->display_order = $request->display_order;
+        $tag->save();
+        return response()->api($tag);
     }
 
     /**

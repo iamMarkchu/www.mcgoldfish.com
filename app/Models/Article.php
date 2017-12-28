@@ -6,13 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
     public function category()
     {
-        return $this->hasOne('App\Models\Category');
+        return $this->belongsTo('App\Models\Category');
     }
 
     public function tags()
     {
-        return $this->hasMany('App\Models\Tag');
+        return $this->belongsToMany('App\Models\Tag');
     }
 }

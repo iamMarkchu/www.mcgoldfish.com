@@ -23,4 +23,12 @@ Route::group(['namespace' => 'Api', 'middleware' => ['auth:api'],], function(){
         'tags' => 'TagController',
         'categories' => 'CategoryController',
     ]);
+    Route::put('/articles/{article}/change', 'ArticleController@change');
+    Route::post('upload', function(Request $request){
+        $path = $request->file('uploadFile')->store('public/image');
+        return Storage::url($path);
+    });
+    Route::delete('upload', function(Request $request){
+        echo $request->uploadFile;
+    });
 });
