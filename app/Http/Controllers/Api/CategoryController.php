@@ -5,18 +5,20 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @param \Illuminate\Http\Request $request
      * @param \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
-    public function index(Category $category)
+    public function index(Request $request, Category $category)
     {
-        return response()->api($category->all());
+        return response()->api($category->withCount('articles')->paginate($request->limit));
     }
 
     /**
@@ -70,13 +72,16 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\UpdateCategoryRequest  $request
+     * @param  \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $category->category_name = $request->category_name;
+        $category->display_order = $request->display_order;
+        $category->save();
+        return response()->api($category);
     }
 
     /**

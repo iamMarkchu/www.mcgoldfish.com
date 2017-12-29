@@ -20,7 +20,8 @@ class ArticleController extends Controller
      */
     public function index(Request $request, Article $article)
     {
-        return $article->with('category', 'tags', 'user')->paginate($request->limit);
+        $articles = $article->with('category', 'tags', 'user')->paginate($request->limit);
+        return response()->api($articles);
     }
 
     /**
@@ -106,7 +107,7 @@ class ArticleController extends Controller
         $article->user_id = Auth::id();
         $article->title = $request->title;
         $article->content = $request->input('content');  // content属性被保留
-        $article->image = $request->image;
+        $article->image = ($request->filled('image')) ? $request->image: '';
         $article->display_order = $request->display_order;
         $article->status = 'republish';
         $article->source = $request->source;
