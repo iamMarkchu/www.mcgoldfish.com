@@ -60,6 +60,7 @@ class ArticleController extends Controller
     {
         $data = $article->toArray();
         $tags = $article->tags;
+        $data['tags'] = [];
         foreach ($tags as $tag)
         {
             $data['tags'][] = $tag->id;
@@ -109,7 +110,7 @@ class ArticleController extends Controller
         $article->content = $request->input('content');  // content属性被保留
         $article->image = ($request->filled('image')) ? $request->image: '';
         $article->display_order = $request->display_order;
-        $article->status = 'republish';
+        $article->status = isset($article->status)? $article->status: 'republish';
         $article->source = $request->source;
         $article->click_count = 0;
         $article->vote_count = 0;

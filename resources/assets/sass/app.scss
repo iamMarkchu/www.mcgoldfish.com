@@ -7,3 +7,59 @@
 
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+// Custom
+.meta-list {
+  padding-left: 0;
+}
+.meta-list .meta-item {
+  display: inline-block;
+}
+.meta-list .meta-item:not(:last-child):after {
+  content: "\B7";
+  margin: 0 .4em;
+  color: #b2bac2;
+}
+.title {
+  font-size: 1.4em;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #2e3135;
+}
+.info-box {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+}
+.header-list,.sub-header-list {
+  padding-left: 15px;
+}
+.header-list>li>a {
+  color: #767676;
+  font-size: 16px;
+  font-weight: 500;
+}
+.sub-header-list>li>a {
+  color: #767676;
+  font-size: 12px;
+  font-weight: 400;
+}
+.mark-markdown-block {
+
+}
+.mark-markdown-block h2 {
+  padding-bottom: 9px;
+  border-bottom: 1px solid #efefef;
+  cursor: pointer;
+}
+.mark-markdown-block h3 {
+  font-size: 16px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 994px){
+  .mark-container, .mark-content {
+    padding: 0;
+  }
+}

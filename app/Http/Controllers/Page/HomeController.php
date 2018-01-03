@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Page;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 
 class HomeController extends Controller
 {
@@ -11,6 +12,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('page.home');
+        $data['articles'] = Article::where(['status' => 'active'])->with('category', 'user')->limit(20)->get();
+        return view('page.home', $data);
     }
 }
