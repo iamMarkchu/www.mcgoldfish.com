@@ -3,7 +3,7 @@
     <div class="col-md-9 col-sm-12 mark-content">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h1 class="text-center">{{ $article->title }}</h1>
+                <h1 class="text-center article-title">{{ $article->title }}</h1>
             </div>
             <div class="panel-body mark-markdown-block">
                 {!! $article->htmlContent !!}
