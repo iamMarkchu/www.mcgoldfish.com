@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -28,8 +29,12 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
+    /**
+     * @var string
+     */
+    protected $registerAfterUrl = 'register-after-url';
     /**
      * Create a new controller instance.
      *
@@ -52,11 +57,6 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'role' => [
-                'required',
-                'string',
-                Rule::in('editor', 'visitor')
-            ],
         ]);
     }
 
@@ -73,8 +73,38 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'status' => 'pending',
-            'role' => $data['role'],
+            'role' => 'visitor',
             'avatar' => 'https://avatars3.githubusercontent.com/u/14805449?s=460&v=4'
         ]);
+    }
+
+    /**
+     * Show the application registration form.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm(Request $request)
+    {
+        // 存一个session
+        $referer = $request->header('referer');
+        $request->session()->put($this->registerAfterUrl, $referer);
+        return view('auth.register');
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+        if($request->session()->has($this->registerAfterUrl))
+        {
+            $this->redirectTo = $request->session()->get($this->registerAfterUrl);
+        }
+        redirect()->intended($this->redirectTo);
     }
 }

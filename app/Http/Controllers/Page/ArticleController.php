@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Page;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\Comment;
 use Parsedown;
 
 class ArticleController extends Controller
@@ -37,8 +38,13 @@ class ArticleController extends Controller
             global $headerIndex;
             return '<h'. $match[1] . ' id="header_'.(++$headerIndex) .'">'.$match[2]. '</h'.$match[1].'>';
         }, $article->htmlContent);
+
+        // 评论
+        $comments = Comment::where(['status' => 'active', 'article_id' => $article->id])->with('owner')->orderBy('id', 'desc')->get();
+        $comments = $comments->groupBy('parent_id');
         $data['article'] = $article;
         $data['headers'] = $headers;
+        $data['comments'] = $comments;
         // dd($data);die;
         return view('page.article', $data);
     }

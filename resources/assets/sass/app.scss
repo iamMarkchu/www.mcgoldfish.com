@@ -84,3 +84,32 @@
     padding: 0;
   }
 }
+
+// comment
+.comment-heading {
+  font-weight: 600;
+}
+.comment-body {
+  color: #000;
+}
+.comment-footer {
+  font-size: .8em;
+}
+.comment-avatar {
+  border-radius: 50%;
+}
+.comment-footer {
+  padding-left: 0;
+}
+.comment-footer>li {
+  display: inline;
+}
+.comment-footer>li:not(:last-child):after {
+  content: "\B7";
+  margin: 0 .4em;
+  color: #b2bac2;
+}
+.comment-block {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f5f5f5;
+}
