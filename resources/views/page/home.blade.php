@@ -25,13 +25,13 @@
         </div>
     </div>
 </div>
-<div class="col-md-3">
+<div class="col-md-3 mark-content hidden-xs">
     {{--侧边栏--}}
     <div class="panel panel-default">
         <div class="panel-heading">热门分类</div>
         <div class="panel-body">
             @foreach($categories as $category)
-                <a href="" class="label label-primary">{{ $category->category_name }}</a>
+                <a href="javascript:;" class="label label-success label-category">{{ $category->category_name }}</a>
             @endforeach
         </div>
     </div>
