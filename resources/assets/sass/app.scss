@@ -1,3 +1,5 @@
+// Font Awesome
+@import "~font-awesome/scss/font-awesome.scss";
 // Variables
 @import "variables";
 
@@ -124,19 +126,47 @@ footer {
 }
 
 //
-//.columen-view-fixed {
-//  position: fixed;
-//  top: 200px;
-//  margin-left: -85px;
-//}
-//.columen-view-fixed ul.article-suspending-panel {
-//  width: 40px;
-//  opacity: 0;
-//  padding-left: 0;
-//}
-//.columen-view-fixed ul.article-suspending-panel.show {
-//  opacity: 1;
-//}
-//.columen-view-fixed ul>li {
-//  list-style: none;
-//}
+.columen-view-fixed {
+  position: fixed;
+  top: 200px;
+  margin-left: -85px;
+}
+.columen-view-fixed ul.article-suspending-panel {
+  width: 40px;
+  opacity: 0;
+  padding-left: 0;
+}
+.columen-view-fixed ul.article-suspending-panel.show {
+  opacity: 1;
+}
+.columen-view-fixed ul>li {
+  text-align: center;
+  list-style: none;
+  margin-bottom: 10px;
+  color: #00d300;
+}
+.columen-view-fixed ul>li>a {
+  width: 40px;
+  height: 40px;
+  display: block;
+  background-color: #fff;
+  border-radius: 50%;
+}
+.columen-view-fixed ul>li>a:hover {
+  color: #00d300;
+}
+.columen-view-fixed ul>li>a {
+  color: #636b6f;
+}
+.columen-view-fixed ul>li>a>i {
+  font-size: 18px;
+  position: relative;
+  top: 12px;
+}
+.qrcode {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  margin-left: -36px;
+  margin-top: 10px;
+}

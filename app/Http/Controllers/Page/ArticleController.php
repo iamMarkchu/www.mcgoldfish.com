@@ -12,7 +12,7 @@ class ArticleController extends Controller
 {
     public function index($id)
     {
-        $article = Article::find($id);
+        $article = Article::with('tags')->find($id);
         $pd = new Parsedown();
         $article->htmlContent = $pd->text($article->content);
         $regex = '/<h(2|3)>(.*?)<\/h(2|3)>/';
@@ -45,6 +45,7 @@ class ArticleController extends Controller
         $data['article'] = $article;
         $data['headers'] = $headers;
         $data['comments'] = $comments;
+        $data['seo']['title'] = $article->title. ' McGoldfish.com';
         // dd($data);die;
         return view('page.article', $data);
     }
