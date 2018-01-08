@@ -41,8 +41,8 @@
                                 <h4 class="modal-title">登录之后才能评论</h4>
                             </div>
                             <div class="modal-footer">
-                                <a href="/login" class="btn btn-success">登录</a>
-                                <a href="/register" class="btn btn-primary">注册</a>
+                                <a href="{{ route('login', [ 'callback' => url()->current(), 'from' => 'comment']) }}" class="btn btn-success">登录</a>
+                                <a href="{{ route('register', [ 'callback' => url()->current(),'form' => 'comment']) }}" class="btn btn-primary">注册</a>
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,6 @@
                                 @endif
                             </li>
                         @endforeach
-                        <li><a href="#header_1">返回顶部</a></li>
                     </ul>
                 </div>
             </div>

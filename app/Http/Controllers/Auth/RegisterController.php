@@ -79,20 +79,6 @@ class RegisterController extends Controller
     }
 
     /**
-     * Show the application registration form.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function showRegistrationForm(Request $request)
-    {
-        // 存一个session
-        $referer = $request->header('referer');
-        $request->session()->put($this->registerAfterUrl, $referer);
-        return view('auth.register');
-    }
-
-    /**
      * The user has been registered.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -101,10 +87,14 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
-        if($request->session()->has($this->registerAfterUrl))
+        if($request->filled('callback'))
         {
-            $this->redirectTo = $request->session()->get($this->registerAfterUrl);
+            $this->redirectTo = $request->get('callback');
         }
-        redirect()->intended($this->redirectTo);
+        if($request->filled('from'))
+        {
+            $this->redirectTo .= $request->get('from');
+        }
+        return redirect()->intended($this->redirectTo);
     }
 }

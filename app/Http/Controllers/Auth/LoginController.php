@@ -46,28 +46,18 @@ class LoginController extends Controller
      * The user has been authenticated.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
      * @return mixed
      */
-    public function authenticated(Request $request, $user)
+    public function authenticated(Request $request)
     {
-        if($request->session()->has($this->loginAfterUrl))
+        if($request->filled('callback'))
         {
-            $this->redirectTo = $request->session()->get($this->loginAfterUrl);
+            $this->redirectTo = $request->get('callback');
         }
-        redirect()->intended($this->redirectTo);
-    }
-
-    /**
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function showLoginForm(Request $request)
-    {
-        // 存一个session
-        $referer = $request->header('referer');
-        $request->session()->put($this->loginAfterUrl, $referer);
-        return view('auth.login');
+        if($request->filled('from'))
+        {
+            $this->redirectTo .= '#'.$request->get('from');
+        }
+        return redirect()->intended($this->redirectTo);
     }
 }

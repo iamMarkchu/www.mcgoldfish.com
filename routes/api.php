@@ -22,8 +22,10 @@ Route::group(['namespace' => 'Api', 'middleware' => ['auth:api'],], function(){
         'articles' => 'ArticleController',
         'tags' => 'TagController',
         'categories' => 'CategoryController',
+        'comments' => 'CommentController',
     ]);
     Route::put('/articles/{article}/change', 'ArticleController@change');
+    Route::put('/comments/{comment}/change', 'CommentController@change');
     Route::post('upload', function(Request $request){
         $path = $request->file('uploadFile')->store('public/image');
         return Storage::url($path);

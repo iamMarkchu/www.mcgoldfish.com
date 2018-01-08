@@ -12,12 +12,14 @@ class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * @param  \Illuminate\Http\Request $request
+     * @param \App\Models\Comment $comment
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, Comment $comment)
     {
-        //
+        $comments = $comment->with(['owner', 'article'])->paginate($request->limit);
+        return response()->api($comments);
     }
 
     /**
@@ -106,5 +108,12 @@ class CommentController extends Controller
             $comment->decrement('good_count');
         }
         return response()->api('1');
+    }
+
+    public function change(Request $request, Comment $comment)
+    {
+        $comment->status = $request->status;
+        $comment->save();
+        return response()->api($comment);
     }
 }

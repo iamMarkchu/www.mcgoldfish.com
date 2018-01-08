@@ -2,6 +2,12 @@
 @section('content')
     <div id="content">
         <div class="container mark-container">
+            {{--<div class="columen-view-fixed">--}}
+                {{--<ul class="article-suspending-panel show">--}}
+                    {{--<li>点赞</li>--}}
+                    {{--<li><a href="#comment">评论</a></li>--}}
+                {{--</ul>--}}
+            {{--</div>--}}
             @yield('main_content')
         </div>
         <div class="dialog-block">
