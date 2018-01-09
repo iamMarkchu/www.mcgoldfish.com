@@ -14,7 +14,9 @@ class ArticleController extends Controller
 {
     public function index($id)
     {
-        $article = Article::with('tags')->find($id);
+        $article = Article::with('tags')->where('status', 'active')->find($id);
+        if(empty($article))
+            abort(404);
         $pd = new Parsedown();
         $article->htmlContent = $pd->text($article->content);
         $regex = '/<h(2|3)>(.*?)<\/h(2|3)>/';
