@@ -7,6 +7,7 @@
     <title>{{ isset($seo['title'])? $seo['title']: config('seo.title') }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
 </head>
 <body>
     <div id="app">
