@@ -74,7 +74,7 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'status' => 'pending',
             'role' => 'visitor',
-            'avatar' => 'https://avatars3.githubusercontent.com/u/14805449?s=460&v=4'
+            'avatar' => config('auth.default_user_image')
         ]);
     }
 

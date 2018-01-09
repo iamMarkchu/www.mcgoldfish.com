@@ -17,12 +17,14 @@ Route::get('/checkLogin', function (){
 });
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['namespace' => 'Page'], function(){
-    Route::get('/', 'HomeController@index');
+Route::group(['namespace' => 'Page', 'middleware' => ['tracking']], function(){
+    Route::get('/', 'HomeController@index')->name('index');
     Route::get('article/{id}', 'ArticleController@index')->name('article');
 });
 
 Route::group(['namespace' => 'Api', 'middleware' => ['auth']], function () {
    Route::resource('comments', 'CommentController');
    Route::post('/comments/vote', 'CommentController@vote');
+
+   Route::get('/user/settings', 'UserController@settings')->name('user-settings');
 });

@@ -120,6 +120,13 @@ export default {
                     $('#comment_content').val('');
                     $('#showCommentBlock').collapse('toggle');
                     that.showMessage('评论成功！', '待审核通过后，方可展示出来');
+                    setTimeout(function(){
+                        if (window.location.href.indexOf('#comment') === -1) {
+                            window.location.href += '#comment';
+                        }else{
+                            window.location.reload();
+                        }
+                    }, 1000);
                 }
             },
             error: function(data) {

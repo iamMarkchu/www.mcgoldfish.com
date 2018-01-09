@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Parsedown;
 
 class ArticleController extends Controller
@@ -40,7 +42,14 @@ class ArticleController extends Controller
         }, $article->htmlContent);
 
         // 评论
-        $comments = Comment::where(['status' => 'active', 'article_id' => $article->id])->with('owner')->orderBy('id', 'desc')->get();
+        $commentQuery = Comment::where(['status' => 'active', 'article_id' => $article->id]);
+        if(Auth::check())
+        {
+            $commentQuery->orWhere(function($query) use($article){
+                $query->where(['user_id' => Auth::id(), 'article_id' => $article->id, 'status' => 'pending']);
+            });
+        }
+        $comments = $commentQuery->with('owner')->orderBy('id', 'desc')->get();
         $comments = $comments->groupBy('parent_id');
         $data['article'] = $article;
         $data['headers'] = $headers;

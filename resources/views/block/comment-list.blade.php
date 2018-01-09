@@ -7,7 +7,12 @@
                 </a>
             </div>
             <div class="media-body">
-                <p class="comment-heading">{{ $comment->owner->name }}</p>
+                <p class="comment-heading">
+                    {{ $comment->owner->name }}
+                    @if($comment->status == 'pending')
+                        | <span class="label label-danger label-xs">待审核，仅本人可见</span>
+                    @endif
+                </p>
                 <p class="comment-body">{{ $comment->content }}</p>
                 <ul class="comment-footer">
                     <li><a href="javascript:;" class="btn btn-info btn-xs comment-good" data-comment-id="{{ $comment->id }}">赞(<span class="good_count">{{ $comment->good_count }}</span>)</a></li>

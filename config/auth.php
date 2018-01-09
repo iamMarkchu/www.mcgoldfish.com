@@ -18,6 +18,7 @@ return [
         'passwords' => 'users',
     ],
 
+    'default_user_image' => 'https://www.mcgoldfish.com/storage/image/Erhq5Q6lZhHRXg7vDqsVfQwJIZGWu2r1A6sWloR2.png',
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards

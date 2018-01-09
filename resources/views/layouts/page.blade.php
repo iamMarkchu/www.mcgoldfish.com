@@ -5,6 +5,5 @@
             @include('block.left-fixed-menu')
             @yield('main_content')
         </div>
-        @include('block.message-dialog')
     </div>
 @endsection

@@ -15,6 +15,9 @@
         @yield('content')
         @include('block.footer')
     </div>
-    <script src="{{ mix('js/app.js') }}"></script>
+    @include('block.message-dialog')
+    @section('page-js')
+        <script src="{{ mix('js/app.js') }}"></script>
+    @show
 </body>
 </html>
