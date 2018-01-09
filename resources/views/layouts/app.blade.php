@@ -8,6 +8,17 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    @if(config('app.APP_ENV') == 'production')
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?1a190f4c8046de525cccfe1b2ae4f03c";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    @endif
 </head>
 <body>
     <div id="app">
