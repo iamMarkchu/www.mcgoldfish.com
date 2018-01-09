@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="/favicon.png">
-    @if(config('app.APP_ENV') == 'production')
+    @if(config('app.env') === 'production')
     <script>
         var _hmt = _hmt || [];
         (function() {
