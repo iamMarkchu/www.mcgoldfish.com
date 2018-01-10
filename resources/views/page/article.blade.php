@@ -54,5 +54,6 @@
             </div>
         </div>
     </div>
+    @include('block.category-panel')
 </div>
 @endsection

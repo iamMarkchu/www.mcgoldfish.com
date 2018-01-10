@@ -2,7 +2,7 @@
 @section('main_content')
 <div class="col-md-9 col-sm-12 mark-content">
     <div class="panel panel-default">
-        <div class="panel-heading">热门文章</div>
+        <div class="panel-heading">文章列表</div>
         <div class="list-group">
             @foreach($articles as $article)
                 <a href="{{ route('article', ['id' => $article->id ]) }}" class="list-group-item">
@@ -23,17 +23,12 @@
                 </a>
             @endforeach
         </div>
+        <div class="panel-body">
+            {{ $articles->links() }}
+        </div>
     </div>
 </div>
 <div class="col-md-3 mark-content hidden-xs">
-    {{--侧边栏--}}
-    <div class="panel panel-default">
-        <div class="panel-heading">热门分类</div>
-        <div class="panel-body">
-            @foreach($categories as $category)
-                <a href="javascript:;" class="label label-success label-category">{{ $category->category_name }}</a>
-            @endforeach
-        </div>
-    </div>
+    @include('block.category-panel')
 </div>
 @endsection

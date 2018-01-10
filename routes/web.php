@@ -20,6 +20,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['namespace' => 'Page', 'middleware' => ['tracking']], function(){
     Route::get('/', 'HomeController@index')->name('index');
     Route::get('article/{id}', 'ArticleController@index')->name('article');
+    Route::get('category/{id}', 'CategoryController@index')->name('category');
 });
 
 Route::group(['namespace' => 'Api', 'middleware' => ['auth']], function () {
