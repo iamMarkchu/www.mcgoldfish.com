@@ -12,7 +12,7 @@ let mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+   .sass('resources/assets/sass/app.scss', 'public/css').version();
 // 复制文件
 // mix.copy('node_modules/blueimp-file-upload/css/jquery.fileupload.css', 'public/css/jquery-upload.css');
 // mix.scripts([

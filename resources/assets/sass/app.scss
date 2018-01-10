@@ -30,13 +30,19 @@
   flex-direction: column;
   justify-content: center;
 }
-.header-list,.sub-header-list {
+.header-list{
   padding-left: 15px;
 }
 .header-list>li>a {
   color: #767676;
   font-size: 16px;
   font-weight: 500;
+}
+.sub-header-list {
+  padding-left: 0;
+}
+.sub-header-list>li {
+  list-style: none;
 }
 .sub-header-list>li>a {
   color: #767676;

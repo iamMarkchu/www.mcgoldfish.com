@@ -11,23 +11,19 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title pull-left" id="comment">评论@if($comments->has(0))({{ $comments->get(0)->count() }})@endif</h3>
-            <a class="btn btn-primary btn-xs pull-right" data-toggle="collapse" href="#showCommentBlock" aria-expanded="true" aria-controls="collapseOne">评论</a>
-            <div class="clearfix"></div>
+            <h3 class="panel-title" id="comment">评论@if($comments->has(0))({{ $comments->get(0)->count() }})@endif</h3>
         </div>
-        <div id="showCommentBlock" class="panel-collapse collapse">
-            <div class="panel-body">
-                <form action="" method="post">
-                    <div class="form-group">
-                        <input type="hidden" name="article_id" value="{{ $article->id }}">
-                        <textarea id="comment_content" name="comment_content" class="form-control" rows="3"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <a href="javascript:;" class="btn btn-success btn-sm pull-right commentSubmit" role="button">提交</a>
-                        <a href="javascript:;" class="btn btn-sm pull-right commentCancel" role="button">取消</a>
-                    </div>
-                </form>
-            </div>
+        <div class="panel-body">
+            <form name="commentForm" action="" method="post">
+                <div class="form-group">
+                    <input type="hidden" name="article_id" value="{{ $article->id }}">
+                    <textarea id="comment_content" name="comment_content" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <a href="javascript:;" class="btn btn-success btn-sm pull-right commentSubmit" role="button">评论</a>
+                    <div class="clearfix"></div>
+                </div>
+            </form>
         </div>
         <div class="panel-body">
             @if($comments->has(0))
@@ -62,7 +58,7 @@
                             @if(isset($header['h3']))
                                 <ol class="sub-header-list">
                                     @foreach($header['h3'] as $subIndex => $subHeader)
-                                        <li><a href="#{{ $subIndex }}">{{ $subHeader }}</a></li>
+                                        <li><a href="#{{ $subIndex }}">{{ $loop->index + 1 }}. {{ $subHeader }}</a></li>
                                     @endforeach
                                 </ol>
                             @endif

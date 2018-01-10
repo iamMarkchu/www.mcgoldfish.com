@@ -1,6 +1,7 @@
 
 // Body
 $body-bg: #f5f8fa;
+$font-family-base: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 
 // Grid System
 $grid-gutter-width:         15px;
@@ -23,10 +24,9 @@ $brand-danger: #bf5329;
 
 // Typography
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
-$font-family-sans-serif: "Raleway", sans-serif;
 $font-size-base: 14px;
 $line-height-base: 1.6;
-$text-color: #636b6f;
+$text-color: #333;
 
 // Navbar
 $navbar-default-bg: #fff;
