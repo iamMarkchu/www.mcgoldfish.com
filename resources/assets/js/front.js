@@ -86,9 +86,7 @@ export default {
               }
           });
           $('.suspension-panel').click(function() {
-              $('body').animate({
-                  'scrollTop': 0
-              }, 1500);
+              document.documentElement.scrollTop = 0;
           });
       }
       // 左侧边栏 wx hover事件
