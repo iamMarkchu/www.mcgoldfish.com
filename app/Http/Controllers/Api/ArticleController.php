@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Article;
+use App\Models\Vote;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
@@ -137,5 +138,33 @@ class ArticleController extends Controller
         $article->status = $request->status;
         $article->save();
         return response()->api($article);
+    }
+
+    public function vote(Request $request)
+    {
+        $id = $request->id;
+        $article = Article::find($id);
+        $action = $request->action;
+        $comment = Vote::where(['article_id' => $id, 'user_id' => Auth::id()])->first();
+        if($action == 'add')
+        {
+            if(empty($comment))
+            {
+                $comment = new Vote();
+                $comment->article_id = $id;
+                $comment->user_id = Auth::id();
+                $comment->save();
+                $article->increment('vote_count');
+            }
+
+        }else {
+            if(!empty($comment))
+            {
+                $comment->forceDelete();
+                $article->decrement('vote_count');
+            }
+
+        }
+        return response()->api('1');
     }
 }

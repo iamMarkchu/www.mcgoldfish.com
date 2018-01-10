@@ -145,13 +145,12 @@ footer {
 .columen-view-fixed ul.article-suspending-panel.show {
   opacity: 1;
 }
-.columen-view-fixed ul>li {
+.columen-view-fixed ul>li, .suspension-panel ul>li {
   text-align: center;
-  list-style: none;
   margin-bottom: 10px;
   color: #00d300;
 }
-.columen-view-fixed ul>li>a {
+.columen-view-fixed ul>li>a, .suspension-panel ul>li>a {
   width: 40px;
   height: 40px;
   display: block;
@@ -168,6 +167,7 @@ footer {
   font-size: 18px;
   position: relative;
   top: 12px;
+  color: #909090;
 }
 .qrcode {
   position: relative;
@@ -178,4 +178,23 @@ footer {
 }
 .mark-brand {
   padding: 0;
+}
+
+// suspension-panel
+.suspension-panel {
+  bottom: 2em;
+  right: 2em;
+  position: fixed;
+}
+.suspension-panel ul>li {
+  list-style: none;
+}
+.suspension-panel ul>li>a>i {
+  position: relative;
+  font-size: 24px;
+  top: 5px;
+  color: #909090;
+}
+.vote.voted_good i {
+  color: #00d300;
 }

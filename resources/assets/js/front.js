@@ -22,7 +22,7 @@ export default {
                   return ;
               }
               // 检查登录状态
-              that.checkLogin();
+              that.checkLogin('comment');
 
               that.submitComment();
           })
@@ -68,7 +68,6 @@ export default {
       // 左侧边栏 滚动事件
       if ($('.columen-view-fixed').length > 0) {
          $(window).scroll(function() {
-
              if ($(this).scrollTop() > 200 && !$('.article-suspending-panel').hasClass('show')) {
                  $('.article-suspending-panel').addClass('show');
              }else if ($(this).scrollTop() <= 200 && $('.article-suspending-panel').hasClass('show')) {
@@ -76,6 +75,21 @@ export default {
              }
 
          });
+      }
+      // 右侧边栏 滚动时间
+      if ($('.suspension-panel').length > 0) {
+          $(window).scroll(function() {
+              if ($(this).scrollTop() > 150 && !$('.suspension-panel-sub').hasClass('show')) {
+                  $('.suspension-panel-sub').addClass('show');
+              }else if ($(this).scrollTop() <= 200 && $('.suspension-panel-sub').hasClass('show')) {
+                  $('.suspension-panel-sub').removeClass('show');
+              }
+          });
+          $('.suspension-panel').click(function() {
+              $('body').animate({
+                  'scrollTop': 0
+              }, 1500);
+          });
       }
       // 左侧边栏 wx hover事件
       if ($('.wx-share').length > 0) {
@@ -85,23 +99,62 @@ export default {
               $('.qrcode').addClass('hidden');
           })
       }
+
+      // 点赞事件
+      if ($('.vote').length > 0) {
+          $('.vote').click(function (){
+              // 检查登录状态
+              that.checkLogin('vote');
+
+              const article_id = $(this).attr('data-article-id');
+              const cookie_prefix = 'voted_article_';
+              let count = parseInt($('.vote_count').html());
+              const url = '/articles/vote';
+              const type = 'POST';
+              let data = { id: article_id, action: 'add' };
+              if ($(this).hasClass('voted_good')) {
+                  count -= 1;
+                  Cookies.remove(cookie_prefix + article_id, '1');
+                  data = { id: article_id, action: 'delete' };
+                  $(this).removeClass('voted_good');
+                  $(this).find('i').removeClass('fa-heart').addClass('fa-heart-o');
+              } else {
+                  count += 1;
+                  Cookies.set(cookie_prefix + article_id, '1');
+                  $(this).addClass('voted_good');
+                  $(this).find('i').removeClass('fa-heart-o').addClass('fa-heart');
+              }
+
+              $('.vote_count').html(count);
+              $.ajax({
+                  url,
+                  type,
+                  data,
+                  success: function(data) {
+                      console.log(data);
+                  }
+              })
+          });
+      }
     },
-    checkLogin: function() {
+    checkLogin: function(type) {
         const url = '/checkLogin';
         const that = this;
         $.ajax({
             url,
             success: function(data) {
                 if (data !== '1') {
-                    that.showLoginDialog();
+                    const title = (type == 'comment') ? '评论需要登录': '点赞需要登录';
+                    that.showLoginDialog(title);
                     return;
                 }
             }
         })
     },
-    showLoginDialog: function() {
+    showLoginDialog: function(title) {
         if ($('.loginDialog').length > 0) {
-           $('.loginDialog').modal();
+            $('.loginDialog .modal-title').html(title)
+            $('.loginDialog').modal();
         }
     },
     submitComment: function() {

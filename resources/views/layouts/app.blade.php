@@ -26,7 +26,10 @@
         @yield('content')
         @include('block.footer')
     </div>
-    @include('block.message-dialog')
+    <div class="dialog-block">
+        @include('block.message-dialog')
+        @include('block.force-login')
+    </div>
     @section('page-js')
         <script src="{{ mix('js/app.js') }}"></script>
     @show

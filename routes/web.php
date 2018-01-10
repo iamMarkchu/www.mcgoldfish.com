@@ -25,6 +25,6 @@ Route::group(['namespace' => 'Page', 'middleware' => ['tracking']], function(){
 Route::group(['namespace' => 'Api', 'middleware' => ['auth']], function () {
    Route::resource('comments', 'CommentController');
    Route::post('/comments/vote', 'CommentController@vote');
-
+   Route::post('/articles/vote', 'ArticleController@vote');
    Route::get('/user/settings', 'UserController@settings')->name('user-settings');
 });

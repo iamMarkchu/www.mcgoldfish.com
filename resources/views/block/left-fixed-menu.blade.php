@@ -2,8 +2,8 @@
     <div class="columen-view-fixed hidden-xs hidden-sm hidden-md">
         <ul class="article-suspending-panel">
             <li>
-                <a href="" class="vote"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-                <span>0</span>
+                <a href="javascript:;" class="vote" data-article-id="{{ $article->id }}"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                <span class="vote_count">{{ $article->vote_count }}</span>
             </li>
             <li>
                 <a href="#comment" title="评论"><i class="fa fa-commenting-o" aria-hidden="true"></i></a>
