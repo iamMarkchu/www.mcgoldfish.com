@@ -11,7 +11,7 @@
             <li>
                 <a href="javascript:;" class="wx-share" title="分享到微信"><i class="fa fa-weixin" aria-hidden="true"></i></a>
                 <div class="qrcode hidden">
-                    {!! QrCode::size(100)->generate(Request::url()); !!}
+                    {!! QrCode::size(150)->generate(Request::url()) !!}
                 </div>
             </li>
         </ul>
