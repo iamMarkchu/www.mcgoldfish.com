@@ -23,6 +23,7 @@ Route::group(['namespace' => 'Api', 'middleware' => ['auth:api'],], function(){
         'tags' => 'TagController',
         'categories' => 'CategoryController',
         'comments' => 'CommentController',
+        'images' => 'ImageController',
     ]);
     Route::put('/articles/{article}/change', 'ArticleController@change');
     Route::put('/comments/{comment}/change', 'CommentController@change');
