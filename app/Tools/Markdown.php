@@ -16,7 +16,8 @@ class Markdown extends Parsedown
     {
         $link = parent::inlineLink($excerpt);
         $link['element']['attributes']['target'] = '_blank';
-        $link['element']['attributes']['rel'] = 'nofollow';
+        if(strpos($link['element']['attributes']['href'], config('app.urk')) === false)
+            $link['element']['attributes']['rel'] = 'nofollow';
         $link['element']['attributes']['href'] = config('app.url') .'/link?target='. urlencode($link['element']['attributes']['href']);
         return $link;
     }
