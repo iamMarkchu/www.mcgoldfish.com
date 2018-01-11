@@ -8,7 +8,7 @@ use App\Models\Article;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Parsedown;
+use App\Tools\Markdown;
 
 class ArticleController extends Controller
 {
@@ -17,8 +17,8 @@ class ArticleController extends Controller
         $article = Article::with('tags')->where('status', 'active')->find($id);
         if(empty($article))
             abort(404);
-        $pd = new Parsedown();
-        $article->htmlContent = $pd->text($article->content);
+        $md = new Markdown();
+        $article->htmlContent = $md->text($article->content);
         $regex = '/<h(2|3)>(.*?)<\/h(2|3)>/';
         preg_match_all($regex, $article->htmlContent, $match);
         $headers = [];

@@ -1,8 +1,11 @@
 import $ from 'jquery';
 import Cookies from 'js-cookie';
+// import echo from 'echo-js';
+
 export default {
     init: function() {
         this.initAjax();
+        this.initPlugins();
         this.bindAction();
     },
     initAjax: function() {
@@ -11,6 +14,9 @@ export default {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+    },
+    initPlugins: function () {
+
     },
     bindAction: function() {
       const that = this
@@ -133,6 +139,14 @@ export default {
                   }
               })
           });
+      }
+
+      // 文章块 图片点击事件
+      if($('.mark-markdown-block img').length > 0) {
+          $('.mark-markdown-block img').click(function() {
+              $('.viewImageDialog .modal-body').html($(this).clone());
+              $('.viewImageDialog').modal();
+          })
       }
     },
     checkLogin: function(type) {

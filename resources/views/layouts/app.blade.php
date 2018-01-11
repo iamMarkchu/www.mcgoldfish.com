@@ -30,6 +30,7 @@
     <div class="dialog-block">
         @include('block.message-dialog')
         @include('block.force-login')
+        @include('block.view-image')
     </div>
     @section('page-js')
         <script src="{{ mix('js/app.js') }}"></script>
