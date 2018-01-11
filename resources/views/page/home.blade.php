@@ -13,7 +13,7 @@
                         <div class="list-group-row">
                             <ul class="meta-list">
                                 @if(isset($article->category))
-                                    <li class="meta-item"><span class="label label-success">{{ $article->category->category_name }}</span></li>
+                                    <li class="meta-item"><span class="label label-primary">{{ $article->category->category_name }}</span></li>
                                 @endif
                                 <li class="meta-item">{{ $article->user->name }}</li>
                                 <li class="meta-item">{{ diff_time($article->updated_at) }}</li>
