@@ -11,4 +11,13 @@ class Markdown extends Parsedown
         $image['element']['attributes']['class'] = 'img';
         return $image;
     }
+
+    protected function inlineLink($excerpt)
+    {
+        $link = parent::inlineLink($excerpt);
+        $link['element']['attributes']['target'] = '_blank';
+        $link['element']['attributes']['rel'] = 'nofollow';
+        $link['element']['attributes']['href'] = config('app.url') .'/link?target='. urlencode($link['element']['attributes']['href']);
+        return $link;
+    }
 }

@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +24,9 @@ Route::group(['namespace' => 'Page', 'middleware' => ['tracking']], function(){
     Route::get('/sitemap.xml', 'SitemapController@index')->name('sitemap-index');
     Route::get('/sitemap/articles.xml', 'SitemapController@articles')->name('sitemap-articles');
     Route::get('/sitemap/categories.xml', 'SitemapController@categories')->name('sitemap-categories');
+    Route::get('/link', function(Request $request) {
+       return redirect($request->input('target'));
+    })->name('link');
 });
 
 Route::group(['namespace' => 'Api', 'middleware' => ['auth']], function () {
