@@ -86,6 +86,9 @@
 .mark-markdown-block img {
   cursor: zoom-in;
 }
+.mark-markdown-block a {
+  text-decoration: underline;
+}
 @media screen and (max-width: 994px){
   .mark-container, .mark-content {
     padding: 0;
