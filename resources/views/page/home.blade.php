@@ -30,5 +30,6 @@
 </div>
 <div class="col-md-3 mark-content hidden-xs">
     @include('block.category-panel')
+    @include('block.resource-recommend-panel')
 </div>
 @endsection

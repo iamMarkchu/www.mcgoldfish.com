@@ -6,6 +6,8 @@
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
+// Prismjs
+@import "~prismjs/themes/prism.css";
 // Custom
 .meta-list {
   padding-left: 0;
@@ -62,11 +64,9 @@
 .mark-markdown-block img{
   max-width:100%;
 }
-//.mark-markdown-block pre{
-//  border:none;
-//  background-color:#fff;
-//  padding: 9.5px 0;
-//}
+.mark-markdown-block pre{
+  border:none;
+}
 
 .mark-markdown-block h2{
   padding-bottom: 0.3em;
