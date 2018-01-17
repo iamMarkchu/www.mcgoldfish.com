@@ -107,6 +107,7 @@ class ArticleController extends Controller
     {
         $article->category_id = ($request->filled('category_id')) ? $request->category_id: 0;
         $article->user_id = Auth::id();
+        $article->url_name = ($article->title !== $request->title) ? generate_url($request->title): $article->url_name;
         $article->title = $request->title;
         $article->content = $request->input('content');  // content属性被保留
         $article->image = ($request->filled('image')) ? $request->image: '';
