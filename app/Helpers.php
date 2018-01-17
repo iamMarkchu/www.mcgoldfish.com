@@ -15,6 +15,16 @@ if(!function_exists('diff_time'))
     }
 }
 
+if(!function_exists('get_year'))
+{
+    function get_year()
+    {
+        $dt = Carbon::now();
+        $dt->addDays(3);
+        return $dt->year;
+    }
+}
+
 if(!function_exists('generate_url'))
 {
     function generate_url($title)
