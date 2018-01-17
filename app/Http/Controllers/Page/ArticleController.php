@@ -17,6 +17,15 @@ class ArticleController extends Controller
         $article = Article::with('tags')->where('status', 'active')->find($id);
         if(empty($article))
             abort(404);
+        else
+            return redirect(route('article-v2', ['url_name' => $article->url_name]), 301);
+    }
+
+    public function show($url_name)
+    {
+        $article = Article::with('tags')->where(['status' => 'active', 'url_name' => $url_name])->first();
+        if(empty($article))
+            abort(404);
         $md = new Markdown();
         $article->htmlContent = $md->text($article->content);
         $regex = '/<h(2|3)>(.*?)<\/h(2|3)>/';

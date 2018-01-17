@@ -5,7 +5,7 @@
         <div class="panel-heading">文章列表</div>
         <div class="list-group">
             @foreach($articles as $article)
-                <a href="{{ route('article', ['id' => $article->id ]) }}" class="list-group-item">
+                <a href="{{ route('article-v2', ['url_name' => $article->url_name ]) }}" class="list-group-item">
                     <div class="info-box">
                         <div class="list-group-row">
                             <p class="title">{{ $article->title }}</p>
@@ -24,6 +24,7 @@
             @endforeach
         </div>
         <div class="panel-body">
+            {{-- 分页 --}}
             {{ $articles->links() }}
         </div>
     </div>

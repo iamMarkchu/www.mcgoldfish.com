@@ -43,6 +43,7 @@ class CategoryController extends Controller
         $category->category_name = $request->category_name;
         $category->parent_id = $request->parent_id;
         $category->display_order = $request->display_order;
+        $category->url_name = generate_url($request->category_name);
         $category->save();
         return response()->api($category);
     }
@@ -79,6 +80,7 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         $category->category_name = $request->category_name;
+        $category->url_name = ($category->category_name !== $request->category_name) ? generate_url($request->category_name): $category->url_name;
         $category->display_order = $request->display_order;
         $category->save();
         return response()->api($category);

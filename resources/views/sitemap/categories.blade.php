@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     @foreach ($categories as $category)
         <url>
-            <loc>{{ route('category', ['id' => $category->id]) }}</loc>
+            <loc>{{ route('category-v2', ['url_name' => $category->url_name]) }}</loc>
             <lastmod>{{ $category->updated_at->tz('UTC')->toAtomString() }}</lastmod>
             <changefreq>weekly</changefreq>
             <priority>0.6</priority>
