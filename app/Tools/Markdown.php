@@ -15,10 +15,15 @@ class Markdown extends Parsedown
     protected function inlineLink($excerpt)
     {
         $link = parent::inlineLink($excerpt);
-        $link['element']['attributes']['target'] = '_blank';
-        if(strpos($link['element']['attributes']['href'], config('app.urk')) === false)
-            $link['element']['attributes']['rel'] = 'nofollow';
-        $link['element']['attributes']['href'] = config('app.url') .'/link?target='. urlencode($link['element']['attributes']['href']);
+        if(strpos($excerpt['context'], '!') !== 0)
+        {
+            $link['element']['attributes']['target'] = '_blank';
+            if(strpos($link['element']['attributes']['href'], config('app.url')) === false)
+            {
+                $link['element']['attributes']['rel'] = 'nofollow';
+                $link['element']['attributes']['href'] = config('app.url') .'/link?target='. urlencode($link['element']['attributes']['href']);
+            }
+        }
         return $link;
     }
 }

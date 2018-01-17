@@ -1,4 +1,4 @@
-@if(request()->route()->getName() === 'article')
+@if(request()->route()->getName() === 'article-v2')
     <div class="columen-view-fixed hidden-xs hidden-sm hidden-md">
         <ul class="article-suspending-panel">
             <li>
