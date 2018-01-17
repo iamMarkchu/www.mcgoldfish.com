@@ -1,4 +1,4 @@
-@if(request()->route()->getName() === 'article')
+@if(request()->route()->getName() === 'article-v2')
     <div class="modal fade loginDialog" tabindex="-1" role="dialog" aria-labelledby="loginDialog">
         <div class="modal-dialog">
             <div class="modal-content">
