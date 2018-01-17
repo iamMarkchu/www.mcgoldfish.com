@@ -7,7 +7,8 @@ class Markdown extends Parsedown
     protected function inlineImage($excerpt)
     {
         $image = parent::inlineImage($excerpt);
-        $image['element']['attributes']['data-echo'] = $image['element']['attributes']['src'];
+        $image['element']['attributes']['data-src'] = $image['element']['attributes']['src'];
+        $image['element']['attributes']['src'] = '/blank.gif';
         $image['element']['attributes']['class'] = 'img';
         return $image;
     }

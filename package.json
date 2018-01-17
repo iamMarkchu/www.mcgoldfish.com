@@ -19,6 +19,9 @@
     "vue": "^2.5.7"
   },
   "dependencies": {
+    "echo-js": "^1.7.3",
+    "js-cookie": "^2.2.0",
+    "lazyload": "^2.0.0-beta.2",
     "prismjs": "^1.9.0"
   }
 }

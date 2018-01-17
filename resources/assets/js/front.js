@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import Cookies from 'js-cookie';
 import './highlight.config';
-// import echo from 'echo-js';
+import lazyload from 'lazyload';
 
 export default {
     init: function() {
@@ -17,6 +17,9 @@ export default {
         });
     },
     initPlugins: function () {
+        // 文章块图片 lazy load
+        let images = document.querySelectorAll(".img");
+        new lazyload(images);
     },
     bindAction: function() {
       const that = this
@@ -146,7 +149,7 @@ export default {
           $('.mark-markdown-block img').click(function() {
               $('.viewImageDialog .modal-body').html($(this).clone());
               $('.viewImageDialog').modal();
-          })
+          });
       }
     },
     checkLogin: function(type) {
