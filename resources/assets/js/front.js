@@ -102,9 +102,24 @@ export default {
       if ($('.wx-share').length > 0) {
           $('.wx-share').hover(function (){
               $('.qrcode').removeClass('hidden');
+              if($('.qrcode').hasClass('no_qrcode'))
+              {
+                  const url = '/qrcode';
+                  const data = {type: 'article', id: $(this).attr('data-article-id')};
+                  $.ajax({
+                      url,
+                      data,
+                      type: 'POST',
+                      dataType: 'html',
+                      success: function(data) {
+                        $('.qrcode').html(data);
+                        $('.qrcode').removeClass('no_qrcode');
+                      }
+                  })
+              }
           }, function () {
               $('.qrcode').addClass('hidden');
-          })
+          });
       }
 
       // 点赞事件
@@ -140,7 +155,7 @@ export default {
                   success: function(data) {
                       console.log(data);
                   }
-              })
+              });
           });
       }
 
@@ -164,7 +179,7 @@ export default {
                     return;
                 }
             }
-        })
+        });
     },
     showLoginDialog: function(title) {
         if ($('.loginDialog').length > 0) {
@@ -200,7 +215,7 @@ export default {
             error: function(data) {
                 console.log(data);
             }
-        })
+        });
     },
     showMessage: function(title, content) {
         $('.message-dialog h4').html(title);

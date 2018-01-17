@@ -29,6 +29,8 @@ Route::group(['namespace' => 'Page', 'middleware' => ['tracking']], function(){
     Route::get('/link', function(Request $request) {
        return redirect($request->input('target'));
     })->name('link');
+
+    Route::post('/qrcode/', 'QrcodeController@show')->name('qrcode');
 });
 
 Route::group(['namespace' => 'Api', 'middleware' => ['auth']], function () {

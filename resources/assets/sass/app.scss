@@ -183,6 +183,7 @@ footer {
   height: 110px;
   margin-left: -36px;
   margin-top: 10px;
+  background-color: #fff;
 }
 .mark-brand {
   padding: 0;
@@ -209,4 +210,10 @@ footer {
 
 .viewImageDialog img {
   max-width: 100%;
+}
+
+.loading {
+  color: #e0e0e0;
+  position: relative;
+  top: 35%;
 }
