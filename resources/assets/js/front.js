@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import Cookies from 'js-cookie';
+import './highlight.config';
 // import echo from 'echo-js';
 
 export default {
@@ -16,7 +17,6 @@ export default {
         });
     },
     initPlugins: function () {
-
     },
     bindAction: function() {
       const that = this
