@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 */
 
 Auth::routes();
+
+Route::get('login/github', 'Auth\LoginController@redirectToProvider')->name('github');
+Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('/checkLogin', function (){
    return Auth::check()? 1: 0;
 });
