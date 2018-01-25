@@ -16,7 +16,7 @@ class Markdown extends Parsedown
     protected function inlineLink($excerpt)
     {
         $link = parent::inlineLink($excerpt);
-        if(strpos($excerpt['context'], '!') !== 0)
+        if(strpos($excerpt['context'], '!') !== 0 && isset($link['element']['attributes']['href']))
         {
             $link['element']['attributes']['target'] = '_blank';
             if(strpos($link['element']['attributes']['href'], config('app.url')) === false)
