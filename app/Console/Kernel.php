@@ -39,4 +39,12 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
+
+    protected function getArtisan()
+    {
+        $artisan = parent::getArtisan();
+        $artisan->setName(sprintf('Mark Blog For Laravel', $this->app->version()));
+        return $artisan;
+    }
+
 }

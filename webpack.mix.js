@@ -1,5 +1,4 @@
 let mix = require('laravel-mix');
-
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -13,10 +12,3 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css').version();
-// 复制文件
-// mix.copy('node_modules/blueimp-file-upload/css/jquery.fileupload.css', 'public/css/jquery-upload.css');
-// mix.scripts([
-//     'node_modules/blueimp-file-upload/js/vendor/jquery.ui.widget.js',
-//     'node_modules/blueimp-file-upload/js/jquery.iframe-transport.js',
-//     'node_modules/blueimp-file-upload/js/jquery.fileupload.js',
-// ], 'public/js/jquery-upload.js');
