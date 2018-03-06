@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ isset($seo['title'])? $seo['title']: config('seo.title') }}</title>
+    <meta content="{{ isset($seo['keywords'])? $seo['keywords']: config('seo.keywords') }}" name="keywords">
+    <meta content="{{ isset($seo['description'])? $seo['description']: config('seo.keywordescriptionds') }}" name="description">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="/favicon.png">

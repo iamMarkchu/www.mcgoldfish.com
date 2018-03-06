@@ -65,8 +65,9 @@ class ArticleController extends Controller
         $data['article'] = $article;
         $data['headers'] = $headers;
         $data['comments'] = $comments;
-        $data['seo']['title'] = $article->title. ' McGoldfish.com';
-        // dd($data);die;
+        $data['seo']['title'] = $article->title. ' - McGoldfish.com';
+        $data['seo']['description'] = str_replace("\n", ' ', str_limit($article->content, 200));
+        $data['seo']['keywords'] = $article->tags->implode('tag_name', ',');
         return view('page.article', $data);
     }
 }
