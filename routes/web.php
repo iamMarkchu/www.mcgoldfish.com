@@ -42,3 +42,27 @@ Route::group(['namespace' => 'Api', 'middleware' => ['auth']], function () {
    Route::post('/articles/vote', 'ArticleController@vote');
    Route::get('/user/settings', 'UserController@settings')->name('user-settings');
 });
+
+Route::group(['prefix' => 'admin', 'namespace' => 'Api', 'middleware' => ['auth']], function() {
+    Route::get('/', function() {
+        return view('admin');
+    });
+
+    Route::post('/upload', function(Request $request) {
+        $name = 'file';
+        return upload($request->file($name), $name);
+    });
+
+    Route::resources([
+        'users' => 'UserController',
+        'categories' => 'CategoryController',
+        'tags' => 'TagController',
+        'articles' => 'ArticleController',
+    ]);
+    Route::get('/categories-tree', 'CategoryController@tree');
+});
+
+Route::get('test', function () {
+   $str = "测试123123测";
+   echo generate_url($str);
+});

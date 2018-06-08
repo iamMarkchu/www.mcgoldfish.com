@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
+    protected $article;
+
+    public function __construct(Article $article)
+    {
+        $this->article = $article;
+    }
     /**
      * Display a listing of the resource.
      * @param  \Illuminate\Http\Request $request
@@ -19,10 +25,11 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Article $article)
+    public function index(Request $request)
     {
-        $articles = $article->with('category', 'tags', 'user')->paginate($request->limit);
-        return response()->api($articles);
+        $map = [];
+        $result = $this->article->fetchList($map, $request->input('pageSize', 30));
+        return response()->api($result);
     }
 
     /**

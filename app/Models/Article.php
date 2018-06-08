@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Article extends Model
+class Article extends BaseModel
 {
     public function user()
     {
@@ -28,5 +26,10 @@ class Article extends Model
     public function votes()
     {
         return $this->hasMany('App\Models\Vote');
+    }
+
+    public function fetchList($map, $pageSize=30)
+    {
+        return $this->where($map)->with(['user', 'category', 'tags'])->paginate($pageSize);
     }
 }

@@ -10,6 +10,12 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
+    protected $category;
+
+    public function __construct(Category $category)
+    {
+        $this->category = $category;
+    }
     /**
      * Display a listing of the resource.
      * @param \Illuminate\Http\Request $request
@@ -22,30 +28,16 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreCategoryRequest  $request
-     * @param  \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCategoryRequest $request, Category $category)
+    public function store(StoreCategoryRequest $request)
     {
-        $category->category_name = $request->category_name;
-        $category->parent_id = $request->parent_id;
-        $category->display_order = $request->display_order;
-        $category->url_name = generate_url($request->category_name);
-        $category->save();
-        return response()->api($category);
+        $data = $this->handleRequest($request);
+        $this->category->createOne($data);
+        return response()->api();
     }
 
     /**
@@ -56,34 +48,24 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $data = $this->category->find($id);
+        return response()->api($data);
     }
 
     /**
      * Update the specified resource in storage.
-     *
+     * @param  int $category
      * @param  \App\Http\Requests\UpdateCategoryRequest  $request
-     * @param  \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update($id, UpdateCategoryRequest $request)
     {
-        $category->category_name = $request->category_name;
-        $category->url_name = ($category->category_name !== $request->category_name) ? generate_url($request->category_name): $category->url_name;
-        $category->display_order = $request->display_order;
-        $category->save();
-        return response()->api($category);
+        $data = $this->handleRequest($request);
+        $flag = $this->category->updateItem($data, $id);
+        if ($flag)
+            return response()->api(['id' => $id]);
+        else
+            return response()->api(['id' => $id], 500);
     }
 
     /**
@@ -95,5 +77,36 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function tree()
+    {
+        $categoryList = $this->category->get();
+        $result = $this->treeItem($categoryList);
+        return response()->api($result);
+    }
+
+    protected function treeItem($data, $pid=0)
+    {
+        $subItems = [];
+        foreach ($data as $k => $d)
+        {
+            if ($d->parent_id == $pid)
+            {
+                unset($data[$k]);
+                $d->children = $this->treeItem($data, $d->id);
+                $subItems[] = $d;
+            }
+        }
+        return $subItems;
+    }
+
+    protected function handleRequest(Request $request)
+    {
+        $data = $request->only(
+            $this->category->getFillable()
+        );
+        $data['url_name'] = generate_url($request->category_name);
+        return $data;
     }
 }

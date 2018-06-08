@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Category extends Model
+class Category extends BaseModel
 {
+    protected $fillable = [
+        'category_name', 'parent_id', 'display_order'
+    ];
     public function articles()
     {
         return $this->hasMany('App\Models\Article');

@@ -14,9 +14,11 @@ class ResponseMacroServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Response::macro('api', function ($value = '') {
-            $response = ['message' => 'success', 'content' => $value];
-            return Response::json($response);
+        Response::macro('api', function ($result = 'Success', $code=200) {
+            return Response::json([
+                'code' => $code,
+                'result' => $result
+            ]);
         });
     }
 

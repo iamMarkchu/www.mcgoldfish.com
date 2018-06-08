@@ -23,7 +23,7 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route('category')->id;
+        $id = $this->route('category');
         return [
             'category_name' => 'required|max:50|min:2|unique:categories,category_name,'. $id,
             'parent_id' => 'required|integer',

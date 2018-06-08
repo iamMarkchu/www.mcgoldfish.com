@@ -9,24 +9,22 @@ use App\Http\Requests\StoreTagRequest;
 
 class TagController extends Controller
 {
+    protected $tag;
+
+    public function __construct(Tag $tag)
+    {
+        $this->tag = $tag;
+    }
     /**
      * Display a listing of the resource.
-     *
+     * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
-    public function index(Tag $tag)
+    public function index(Request $request)
     {
-        return response()->api($tag->all());
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $map = [];
+        $result = $this->tag->fetchList($map, $request->input('pageSize', 30));
+        return response()->api($result);
     }
 
     /**
@@ -36,12 +34,11 @@ class TagController extends Controller
      * @param  \App\Models\Tag $tag
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTagRequest $request, Tag $tag)
+    public function store(StoreTagRequest $request)
     {
-        $tag->tag_name = $request->tag_name;
-        $tag->display_order = $request->display_order;
-        $tag->save();
-        return response()->api($tag);
+        $data = $this->handleRequest($request);
+        $this->tag->createOne($data);
+        return response()->api($this->tag->id);
     }
 
     /**
@@ -52,18 +49,8 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $tag = $this->tag->find($id);
+        return response()->api($tag);
     }
 
     /**
@@ -75,7 +62,12 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $this->handleRequest($request);
+        $flag = $this->tag->updateItem($data, $id);
+        if ($flag)
+            return response()->api(['id' => $id]);
+        else
+            return response()->api(['id' => $id], 500);
     }
 
     /**
@@ -87,5 +79,13 @@ class TagController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    protected function handleRequest(Request $request)
+    {
+        $data = $request->only(
+            $this->tag->getFillable()
+        );
+        return $data;
     }
 }
