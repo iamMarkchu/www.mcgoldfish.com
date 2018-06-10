@@ -1,6 +1,6 @@
 import request from '../utils/request'
 
-const URL = '/articles'
+const URL = '/permissions'
 
 export function add(data) {
     return request({
@@ -30,13 +30,5 @@ export function fetch(id) {
     return request({
         url: URL + '/'+ id,
         method: 'get'
-    })
-}
-
-export function changeStatus(data) {
-    return request({
-        url: URL+ '/' + data.id + '/change',
-        method: 'put',
-        data
     })
 }

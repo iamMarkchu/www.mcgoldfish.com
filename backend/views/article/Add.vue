@@ -8,12 +8,6 @@
     import ArticleDetail from './components/ArticleDetail'
     export default {
         name: "ArticleAdd",
-        created() {
-        },
-        data() {
-            return {}
-        },
-        methods: {},
         components: {
             ArticleDetail
         }

@@ -4,6 +4,7 @@
             <el-table
                 border
                 stripe
+                fit
                 v-loading="loading"
                 style="width: 100%"
                 :data="tableData">
@@ -14,7 +15,7 @@
                         :is="colConfig.component"
                         :col-config="colConfig">
                     </component>
-                    <el-table-column v-else v-bind="colConfig"></el-table-column>
+                    <el-table-column v-else v-bind="colConfig" align="center" :width="getWidth(colConfig.prop)"></el-table-column>
                 </template>
             </el-table>
         </div>
@@ -70,7 +71,7 @@
             getWidth(col) {
                 let width = 180
                 if (col == 'id')
-                    width = 50
+                    width = 100
                 return width
             }
         }

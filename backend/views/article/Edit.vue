@@ -1,16 +1,16 @@
 <template>
-    <div id="article-edit">2</div>
+    <div id="article-edit">
+        <article-detail :is-edit='true'></article-detail>
+    </div>
 </template>
 
 <script>
+    import ArticleDetail from './components/ArticleDetail'
     export default {
-        name: "Edit",
-        created() {
-        },
-        data() {
-            return {}
-        },
-        methods: {}
+        name: "ArticleEdit",
+        components: {
+            ArticleDetail
+        }
     }
 </script>
 

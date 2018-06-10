@@ -60,7 +60,7 @@
                 this.$emit('action', '')
             },
             initImage() {
-                if (this.image.length > 0)
+                if (this.image.length > 2)
                 {
                     this.fileList = [{
                         name: 'image.jpg',

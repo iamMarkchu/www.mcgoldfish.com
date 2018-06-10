@@ -43,7 +43,7 @@ Route::group(['namespace' => 'Api', 'middleware' => ['auth']], function () {
    Route::get('/user/settings', 'UserController@settings')->name('user-settings');
 });
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Api', 'middleware' => ['auth']], function() {
+Route::group(['prefix' => 'admin', 'namespace' => 'Api', 'middleware' => ['auth', 'admin']], function() {
     Route::get('/', function() {
         return view('admin');
     });
@@ -59,6 +59,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Api', 'middleware' => ['auth'
         'tags' => 'TagController',
         'articles' => 'ArticleController',
     ]);
+    Route::put('/articles/{article}/change', 'ArticleController@change');
     Route::get('/categories-tree', 'CategoryController@tree');
 });
 

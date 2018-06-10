@@ -9,6 +9,39 @@
             <el-form-item label="封面">
                 <ck-upload :image="form.image" @action="form.image = $event"></ck-upload>
             </el-form-item>
+            <el-form-item label="类别">
+                <ck-tree
+                    :category_ids="form.category_id"
+                    :is-show-checkbox='false'
+                    :is-highlight='true'
+                    :is-expand-all='false'
+                    @nodeClick="form.category_id = $event"
+                    >
+                </ck-tree>
+            </el-form-item>
+            <el-form-item label="标签">
+                <ck-tag :default-tags="form.tag_ids" @change="form.tag_ids = $event"></ck-tag>
+            </el-form-item>
+            <el-form-item label="来源">
+                <el-select v-model="form.source" placeholder="请选择">
+                    <el-option
+                            v-for="item in sourceOptions"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="内容">
+                <el-col :span="12">
+                    <el-input
+                        type="textarea"
+                        :rows="12"
+                        placeholder="请输入内容"
+                        v-model="form.content">
+                    </el-input>
+                </el-col>
+            </el-form-item>
             <el-form-item label="排序">
                 <el-col :span="2">
                     <el-input-number v-model="form.display_order" :step="5"></el-input-number>
@@ -25,11 +58,13 @@
 <script>
     import helper from "../../../utils/helper"
     import CkUpload from "../../../components/CkUpload"
-    import { fetch, add, update } from "../../../api/tags"
+    import { fetch, add, update } from "../../../api/articles"
+    import CkTree from "../../../components/CkTree"
+    import CkTag from "../../../components/CkTag"
 
     const form = {
-        category_id: null,
-        tags: [],
+        category_id: 0,
+        tag_ids: [],
         title: '',
         image: '',
         content: '',
@@ -37,9 +72,13 @@
         source: 'origin'
     }
 
+    const sourceOptions = [
+        { key: 'origin', value: 'origin', label: '原创' },
+        { key: 'reprint', value: 'reprint', label: '转载' }
+    ]
     const validRules = {
         title: [
-            { required: true, message: '请输入类别名字', trigger: 'blur' },
+            { required: true, message: '请输入标题', trigger: 'blur' },
             { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' },
         ],
         display_order: [
@@ -68,6 +107,7 @@
             return {
                 form: Object.assign({}, form),
                 rules: validRules,
+                sourceOptions,
                 submitText: '',
             }
         },
@@ -80,6 +120,10 @@
             fetchData(id) {
                 fetch(id)
                     .then((response) => {
+                        response.data.result.tag_ids = response.data.result.tags.map(function(val) {
+                            return val.id
+                        })
+                        console.log(response.data.result)
                         this.form = response.data.result
                     })
             },
@@ -89,6 +133,7 @@
                     if (valid) {
                         if (this.isEdit)
                         {
+                            console.log(this.form)
                             update(this.form, this.form.id)
                                 .then((repsonse) => {
                                     helper.message('修改成功!')
@@ -109,7 +154,9 @@
             },
         },
         components: {
-            CkUpload
+            CkUpload,
+            CkTree,
+            CkTag,
         }
     }
 </script>

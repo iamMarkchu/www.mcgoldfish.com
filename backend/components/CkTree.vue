@@ -8,7 +8,7 @@
             :default-checked-keys="categoryIds"
             :show-checkbox="isShowCheckbox"
             node-key="id"
-            default-expand-all
+            :default-expand-all="isExpandAll"
             @node-click="handleNodeClick"
             @check-change="handleCheckChange">
         </el-tree>
@@ -20,7 +20,7 @@
 
     let categoryData = []
     const defaultProps = {
-        label: 'name',
+        label: 'category_name',
         children: 'children',
     }
     export default {
@@ -28,10 +28,17 @@
         created() {
             this.fetchTree()
         },
+        watch: {
+            categoryIds(val) {
+                this.$refs.tree.setCurrentKey(val)
+            }
+        },
         props: {
             categoryIds: {
                 type: [Array, Number],
-                default: [],
+                default: function () {
+                    return []
+                },
             },
             isShowCheckbox: {
                 type: Boolean,
@@ -40,6 +47,10 @@
             isHighlight: {
                 type: Boolean,
                 default: false,
+            },
+            isExpandAll: {
+                type: Boolean,
+                default: true,
             }
         },
         data() {
@@ -50,7 +61,8 @@
         },
         methods: {
             handleNodeClick(node) {
-                // console.log(this.$refs.tree.getCheckedKeys())
+                console.log(node)
+                this.$emit('nodeClick', node.id)
             },
             handleCheckChange() {
                 console.log(this.$refs.tree.getCheckedKeys())

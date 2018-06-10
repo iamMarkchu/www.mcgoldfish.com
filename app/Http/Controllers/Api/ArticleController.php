@@ -27,19 +27,9 @@ class ArticleController extends Controller
      */
     public function index(Request $request)
     {
-        $map = [];
+        $map = $this->filterQuery($request);
         $result = $this->article->fetchList($map, $request->input('pageSize', 30));
         return response()->api($result);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -61,46 +51,31 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Article $article
+     * @param  integer $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article)
+    public function show($id)
     {
-        $data = $article->toArray();
-        $tags = $article->tags;
-        $data['tags'] = [];
-        foreach ($tags as $tag)
-        {
-            $data['tags'][] = $tag->id;
-        }
+        $data = $this->article->with(['tags'])->find($id);
         return response()->api($data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateArticleRequest $request
-     * @param  \App\Models\Article $article
+     * @param  integer $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateArticleRequest $request, Article $article)
+    public function update(UpdateArticleRequest $request, $id)
     {
-        $article = $this->fillFromRequest($request, $article);
-        $article->save();
-        // 保存 tag信息
-        $article->tags()->sync($request->tags);
-        return response()->api($article);
+        $data = $this->handleRequest($request);
+        $tagIds = $data['tag_ids'];
+        unset($data['tag_ids']);
+
+        if ($model = $this->article->updateItem($data, $id))
+            $model->tags()->sync($tagIds);
+        return response()->api($this->article);
     }
 
     /**
@@ -125,6 +100,30 @@ class ArticleController extends Controller
         $article->vote_count = 0;
         return $article;
     }
+
+    protected function handleRequest(Request $request)
+    {
+        $data = $request->only(
+            array_merge(
+                    $this->article->getFillable(),
+                    [ 'tag_ids' ]
+                )
+        );
+        $data['url_name'] = generate_url($request->title);
+        $data['content'] = $data['content'] ?? '';
+        $data['image'] = $data['image'] ?? '';
+        return $data;
+    }
+
+    protected function filterQuery(Request $request)
+    {
+        $data = $request->only(
+            $this->article->getQueryable()
+        );
+
+        return filter_empty($data);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

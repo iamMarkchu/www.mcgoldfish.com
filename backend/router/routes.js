@@ -109,6 +109,23 @@ export const constantRouterMap = [
         ]
     },
     {
+        name: '权限管理',
+        path: '/permission',
+        component: require('../components/CkBody'),
+        children: [
+            {
+                name: '权限列表',
+                path: 'index',
+                component: require('../views/role/Index')
+            },
+            {
+                name: '添加权限',
+                path: 'add',
+                component: require('../views/role/Add')
+            }
+        ]
+    },
+    {
         name: '角色管理',
         path: '/role',
         component: require('../components/CkBody'),

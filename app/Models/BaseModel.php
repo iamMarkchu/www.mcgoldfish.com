@@ -25,7 +25,11 @@ class BaseModel extends Model
         {
             $model->$k = $v;
         }
-        return $model->save();
+
+        if ($model->save())
+            return $model;
+        else
+            return false;
     }
 
     public function createOne($data)

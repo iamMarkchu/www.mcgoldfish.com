@@ -55,3 +55,13 @@ if (!function_exists('upload'))
         return Storage::disk('public')->putFile($name, $file);
     }
 }
+
+if (!function_exists('filter_empty'))
+{
+    function filter_empty($arr)
+    {
+        return array_where($arr, function ($value, $key) {
+            return !empty($value);
+        });
+    }
+}

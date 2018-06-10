@@ -24,7 +24,7 @@ class UpdateArticleRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route('article')->id;
+        $id = $this->route('article');
         return [
             'category_id' => 'present|integer',
             'tags' => 'present|array',

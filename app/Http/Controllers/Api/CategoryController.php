@@ -24,7 +24,9 @@ class CategoryController extends Controller
      */
     public function index(Request $request, Category $category)
     {
-        return response()->api($category->withCount('articles')->paginate($request->limit));
+        $map = [];
+        $result = $this->category->fetchList($map, $request->input('pageSize', 30));
+        return response()->api($result);
     }
 
     /**
@@ -54,7 +56,7 @@ class CategoryController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  int $category
+     * @param  int $id
      * @param  \App\Http\Requests\UpdateCategoryRequest  $request
      * @return \Illuminate\Http\Response
      */
