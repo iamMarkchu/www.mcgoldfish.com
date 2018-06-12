@@ -44,7 +44,7 @@ class ArticleController extends Controller
         $article = $this->fillFromRequest($request, $article);
         $article->save();
         // 保存 tag信息
-        $article->tags()->sync($request->tags);
+        $article->tags()->sync($request->tag_ids);
         return response()->api($article);
     }
 

@@ -26,7 +26,7 @@ class StoreArticleRequest extends FormRequest
     {
         return [
             'category_id' => 'present|integer',
-            'tags' => 'present|array',
+            'tag_ids' => 'present|array',
             'title' => 'required|max:255|min:3|unique:articles',
             'content' => 'present',
             'image' => 'present|max:255',
