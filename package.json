@@ -21,9 +21,10 @@
     "vue-router": "^3.0.1"
   },
   "dependencies": {
+    "element-ui": "^2.3.9",
+    "font-awesome": "^4.7.0",
     "js-cookie": "^2.2.0",
     "lazyload": "^2.0.0-beta.2",
-    "prismjs": "^1.11.0",
-    "element-ui": "^2.3.9"
+    "prismjs": "^1.11.0"
   }
 }
