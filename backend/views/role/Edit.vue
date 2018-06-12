@@ -1,13 +1,13 @@
 <template>
-    <div id="role-add">
-        <role-detail></role-detail>
+    <div id="role-edit">
+        <role-detail :is-edit='true'></role-detail>
     </div>
 </template>
 
 <script>
     import RoleDetail from './components/RoleDetail'
     export default {
-        name: "Add",
+        name: "RoleEdit",
         components: {
             RoleDetail
         }

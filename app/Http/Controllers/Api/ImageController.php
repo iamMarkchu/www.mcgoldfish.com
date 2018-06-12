@@ -19,17 +19,8 @@ class ImageController extends Controller
      */
     public function index(Request $request, Image $image)
     {
-        return response()->api($image->paginate($request->limit));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $list = $image->orderBy('id', 'desc')->paginate($request->input('pageSize', 30));
+        return response()->api($list);
     }
 
     /**
@@ -50,17 +41,6 @@ class ImageController extends Controller
         $image->display_order = 99;
         $image->save();
         return response()->api($image);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**

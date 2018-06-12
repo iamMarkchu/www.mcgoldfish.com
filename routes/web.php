@@ -43,7 +43,7 @@ Route::group(['namespace' => 'Api', 'middleware' => ['auth']], function () {
    Route::get('/user/settings', 'UserController@settings')->name('user-settings');
 });
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Api', 'middleware' => ['auth', 'admin']], function() {
+Route::group(['prefix' => 'admin', 'namespace' => 'Api', 'middleware' => ['auth', 'role:Admin|Writer']], function() {
     Route::get('/', function() {
         return view('admin');
     });
@@ -53,12 +53,23 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Api', 'middleware' => ['auth'
         return upload($request->file($name), $name);
     });
 
+    // 不需要再次验证权限
     Route::resources([
-        'users' => 'UserController',
         'categories' => 'CategoryController',
         'tags' => 'TagController',
         'articles' => 'ArticleController',
+        'images' => 'ImageController',
     ]);
+
+    // Admin才能
+    Route::middleware(['role:Admin'])->group(function() {
+        Route::resources([
+            'users' => 'UserController',
+            'permissions' => 'PermissionController',
+            'roles' => 'RoleController',
+        ]);
+    });
+
     Route::put('/articles/{article}/change', 'ArticleController@change');
     Route::get('/categories-tree', 'CategoryController@tree');
 });

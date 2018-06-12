@@ -15,7 +15,7 @@
                         :is="colConfig.component"
                         :col-config="colConfig">
                     </component>
-                    <el-table-column v-else v-bind="colConfig" align="center" :width="getWidth(colConfig.prop)"></el-table-column>
+                    <el-table-column v-else v-bind="colConfig" align="center" :width="getWidth(colConfig)"></el-table-column>
                 </template>
             </el-table>
         </div>
@@ -70,8 +70,10 @@
             },
             getWidth(col) {
                 let width = 180
-                if (col == 'id')
+                if (col.prop == 'id')
+                {
                     width = 100
+                }
                 return width
             }
         }

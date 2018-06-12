@@ -79,6 +79,23 @@ export const constantRouterMap = [
         ],
     },
     {
+        name: '文件管理',
+        path: '/image',
+        component: require('../components/CkBody'),
+        children: [
+            {
+                name: '图片管理',
+                path: 'index',
+                component: require('../views/image/Index'),
+            },
+            {
+                name: '添加图片',
+                path: 'add',
+                component: require('../views/image/Add'),
+            },
+        ]
+    },
+    {
         name: '用户管理',
         path: '/user',
         component: require('../components/CkBody'),
@@ -90,21 +107,9 @@ export const constantRouterMap = [
             },
             {
                 name: '修改用户',
-                path: 'edit/:user_id',
+                path: 'edit/:id',
                 component: require('../views/user/Edit'),
                 display: false,
-            },
-        ]
-    },
-    {
-        name: '文件管理',
-        path: '/file',
-        component: require('../components/CkBody'),
-        children: [
-            {
-                name: '单个图片上传',
-                path: 'image-single',
-                component: require('../views/file/image'),
             },
         ]
     },
@@ -116,12 +121,18 @@ export const constantRouterMap = [
             {
                 name: '权限列表',
                 path: 'index',
-                component: require('../views/role/Index')
+                component: require('../views/permission/Index')
             },
             {
                 name: '添加权限',
                 path: 'add',
-                component: require('../views/role/Add')
+                component: require('../views/permission/Add')
+            },
+            {
+                name: '编辑权限',
+                path: 'edit/:id',
+                component: require('../views/permission/Edit'),
+                display: false,
             }
         ]
     },
@@ -139,6 +150,12 @@ export const constantRouterMap = [
                 name: '添加角色',
                 path: 'add',
                 component: require('../views/role/Add')
+            },
+            {
+                name: '修改角色',
+                path: 'edit/:id',
+                component: require('../views/role/Edit'),
+                display: false,
             }
         ]
     }

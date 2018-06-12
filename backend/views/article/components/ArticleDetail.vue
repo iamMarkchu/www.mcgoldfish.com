@@ -11,7 +11,7 @@
             </el-form-item>
             <el-form-item label="类别">
                 <ck-tree
-                    :category_ids="form.category_id"
+                    :categoryIds="form.category_id"
                     :is-show-checkbox='false'
                     :is-highlight='true'
                     :is-expand-all='false'
@@ -123,8 +123,8 @@
                         response.data.result.tag_ids = response.data.result.tags.map(function(val) {
                             return val.id
                         })
-                        console.log(response.data.result)
-                        this.form = response.data.result
+                        this.form = Object.assign({}, response.data.result)
+                        console.log(this.form)
                     })
             },
             onSubmit(formName) {

@@ -5,7 +5,6 @@
             :data="treeData"
             :props="treeProps"
             :highlight-current="isHighlight"
-            :default-checked-keys="categoryIds"
             :show-checkbox="isShowCheckbox"
             node-key="id"
             :default-expand-all="isExpandAll"
@@ -29,16 +28,18 @@
             this.fetchTree()
         },
         watch: {
-            categoryIds(val) {
-                this.$refs.tree.setCurrentKey(val)
+            categoryIds(val, oldVal) {
+                if (oldVal == 0)
+                {
+                    this.$nextTick(function(){
+                        this.$refs.tree.setCurrentKey(val);
+                    })
+                }
             }
         },
         props: {
             categoryIds: {
-                type: [Array, Number],
-                default: function () {
-                    return []
-                },
+                type: Number
             },
             isShowCheckbox: {
                 type: Boolean,
@@ -61,11 +62,11 @@
         },
         methods: {
             handleNodeClick(node) {
-                console.log(node)
+                // console.log(node)
                 this.$emit('nodeClick', node.id)
             },
             handleCheckChange() {
-                console.log(this.$refs.tree.getCheckedKeys())
+                // console.log(this.$refs.tree.getCheckedKeys())
                 this.$emit('check-change', this.$refs.tree.getCheckedKeys())
             },
             fetchTree() {
