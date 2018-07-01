@@ -33,6 +33,7 @@
     </div>
 </div>
 <div class="col-md-3 hidden-xs hidden-sm mark-content">
+    @include('block.tag-panel')
     <div class="article-menu">
         <div class="panel panel-default">
             <div class="panel-heading">目录</div>
@@ -54,6 +55,5 @@
             </div>
         </div>
     </div>
-    @include('block.category-panel')
 </div>
 @endsection

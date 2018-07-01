@@ -75,16 +75,16 @@ export default {
           })
       }
       // 左侧边栏 滚动事件
-      if ($('.columen-view-fixed').length > 0) {
-         $(window).scroll(function() {
-             if ($(this).scrollTop() > 200 && !$('.article-suspending-panel').hasClass('show')) {
-                 $('.article-suspending-panel').addClass('show');
-             }else if ($(this).scrollTop() <= 200 && $('.article-suspending-panel').hasClass('show')) {
-                 $('.article-suspending-panel').removeClass('show');
-             }
-
-         });
-      }
+      // if ($('.columen-view-fixed').length > 0) {
+      //    $(window).scroll(function() {
+      //        if ($(this).scrollTop() > 200 && !$('.article-suspending-panel').hasClass('show')) {
+      //            $('.article-suspending-panel').addClass('show');
+      //        }else if ($(this).scrollTop() <= 200 && $('.article-suspending-panel').hasClass('show')) {
+      //            $('.article-suspending-panel').removeClass('show');
+      //        }
+      //
+      //    });
+      // }
       // 右侧边栏 滚动时间
       if ($('.suspension-panel').length > 0) {
           $(window).scroll(function() {

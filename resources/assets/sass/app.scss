@@ -8,6 +8,17 @@
 
 // Prismjs
 @import "~prismjs/themes/prism.css";
+
+$ck-color: #2ab27b;
+
+html, body, #app {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+#content {
+  min-height: 100%;
+}
 // Custom
 .meta-list {
   padding-left: 0;
@@ -27,6 +38,7 @@
   color: #2e3135;
 }
 .info-box {
+  padding-top: 15px;
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
@@ -216,4 +228,23 @@ footer {
   color: #e0e0e0;
   position: relative;
   top: 35%;
+}
+
+.mark-navbar-right>li>a {
+  padding-right: 5px;
+  padding-left: 5px;
+  color: $ck-color !important;
+}
+
+.blog-navbar {
+  border-top: 3px solid #2ab27b;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.panel-heading {
+  padding: 1.5rem;
+}
+
+.recommnad-list> a {
+  padding: 1rem 1.5rem;
 }

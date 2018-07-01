@@ -25,6 +25,7 @@ Route::group(['namespace' => 'Page', 'middleware' => ['tracking']], function(){
     Route::get('article/{id}', 'ArticleController@index')->name('article')->where(['id' => '[0-9]+']);
     Route::get('article/{url_name}.html', 'ArticleController@show')->name('article-v2')->where(['url_name' => '[A-Za-z0-9|\-]+']);
     Route::get('category/{id}', 'CategoryController@index')->name('category')->where(['id' => '[0-9]+']);
+    Route::get('tag/{id}', 'TagController@index')->name('tag')->where(['id' => '[0-9]+']);
     Route::get('category/{url_name}.html', 'CategoryController@show')->name('category-v2')->where(['url_name' => '[A-Za-z0-9|\-]+']);
     Route::get('/sitemap.xml', 'SitemapController@index')->name('sitemap-index');
     Route::get('/sitemap/articles.xml', 'SitemapController@articles')->name('sitemap-articles');

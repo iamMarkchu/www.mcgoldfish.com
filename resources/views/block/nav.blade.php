@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-default navbar-static-top blog-navbar">
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand mark-brand" href="{{ url('/') }}">
@@ -12,7 +12,7 @@
             </ul>
 
             <!-- Right Side Of Navbar -->
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right mark-navbar-right">
                 <!-- Authentication Links -->
                 @guest
                 <li><a href="{{route('login', ['callback' => url()->current()])}}">登录</a></li>

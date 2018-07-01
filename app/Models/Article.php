@@ -45,7 +45,7 @@ class Article extends BaseModel
     public function fetchList($map, $pageSize=30)
     {
         $query = $this->setQuery($map);
-        return $this->where($query)->with(['user', 'category', 'tags'])->orderBy('id', 'desc')->paginate($pageSize);
+        return $this->where($query)->with(['user', 'tags'])->orderBy('id', 'desc')->paginate($pageSize);
     }
 
     protected function setQuery($map)

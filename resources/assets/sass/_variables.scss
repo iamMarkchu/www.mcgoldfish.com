@@ -5,7 +5,7 @@ $font-family-base: "lucida grande", "lucida sans unicode", lucida, helvetica, "H
 
 // Grid System
 $grid-gutter-width:         15px;
-$container-large-desktop:      (945px + $grid-gutter-width);
+$container-large-desktop:      (965px + $grid-gutter-width);
 // Borders
 $laravel-border-color: darken($body-bg, 10%);
 $list-group-border: $laravel-border-color;

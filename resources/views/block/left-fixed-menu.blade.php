@@ -1,6 +1,6 @@
 @if(request()->route()->getName() === 'article-v2')
     <div class="columen-view-fixed hidden-xs hidden-sm hidden-md">
-        <ul class="article-suspending-panel">
+        <ul class="article-suspending-panel show">
             <li>
                 <a href="javascript:;" class="vote" data-article-id="{{ $article->id }}"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                 <span class="vote_count">{{ $article->vote_count }}</span>

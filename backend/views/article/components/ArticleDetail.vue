@@ -2,49 +2,44 @@
     <div id="article-detail">
         <el-form ref="form" :model="form" :rules="rules" label-width="120px">
             <el-form-item label="标题" prop="title">
-                <el-col :span="8">
+                <el-col :span="12">
                     <el-input v-model="form.title"></el-input>
                 </el-col>
             </el-form-item>
-            <el-form-item label="封面">
-                <ck-upload :image="form.image" @action="form.image = $event"></ck-upload>
-            </el-form-item>
-            <el-form-item label="类别">
-                <ck-tree
-                    :categoryIds="form.category_id"
-                    :is-show-checkbox='false'
-                    :is-highlight='true'
-                    :is-expand-all='false'
-                    @nodeClick="form.category_id = $event"
-                    >
-                </ck-tree>
-            </el-form-item>
-            <el-form-item label="标签">
-                <ck-tag :default-tags="form.tag_ids" @change="form.tag_ids = $event"></ck-tag>
-            </el-form-item>
-            <el-form-item label="来源">
-                <el-select v-model="form.source" placeholder="请选择">
-                    <el-option
-                            v-for="item in sourceOptions"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                    </el-option>
-                </el-select>
-            </el-form-item>
+            <el-row>
+                <el-col :span="4">
+                    <el-form-item label="标签">
+                        <ck-tag :default-tags="form.tag_ids" @change="form.tag_ids = $event"></ck-tag>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="4">
+                    <el-form-item label="来源">
+                        <el-select v-model="form.source" placeholder="请选择">
+                            <el-option
+                                    v-for="item in sourceOptions"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="4">
+                    <el-form-item label="排序">
+                        <el-col :span="2">
+                            <el-input-number v-model="form.display_order" :step="5"></el-input-number>
+                        </el-col>
+                    </el-form-item>
+                </el-col>
+            </el-row>
             <el-form-item label="内容">
-                <el-col :span="12">
+                <el-col :span="18">
                     <el-input
                         type="textarea"
-                        :rows="12"
+                        :rows="30"
                         placeholder="请输入内容"
                         v-model="form.content">
                     </el-input>
-                </el-col>
-            </el-form-item>
-            <el-form-item label="排序">
-                <el-col :span="2">
-                    <el-input-number v-model="form.display_order" :step="5"></el-input-number>
                 </el-col>
             </el-form-item>
             <el-form-item>
@@ -59,8 +54,8 @@
     import helper from "../../../utils/helper"
     import CkUpload from "../../../components/CkUpload"
     import { fetch, add, update } from "../../../api/articles"
-    import CkTree from "../../../components/CkTree"
     import CkTag from "../../../components/CkTag"
+    import SimpleMDE from "simplemde"
 
     const form = {
         category_id: 0,
@@ -97,6 +92,9 @@
                 this.form = Object.assign({}, form)
             }
         },
+        mounted() {
+            this.simplemde = new SimpleMDE({ element: document.getElementById("ck-md-editor") });
+        },
         props: {
             isEdit: {
                 type: Boolean,
@@ -109,6 +107,7 @@
                 rules: validRules,
                 sourceOptions,
                 submitText: '',
+                simplemde: null,
             }
         },
         computed: {
@@ -155,10 +154,11 @@
         },
         components: {
             CkUpload,
-            CkTree,
-            CkTag,
+            CkTag
         }
     }
 </script>
 
-<style scoped></style>
+<style scoped>
+    @import "~simplemde/src/css/simplemde.css";
+</style>
