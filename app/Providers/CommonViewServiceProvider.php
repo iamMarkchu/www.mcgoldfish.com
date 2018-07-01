@@ -17,8 +17,8 @@ class CommonViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('*', function($view){
-            $categories = Category::orderBy('display_order', 'desc')->get();
-            $tags = Tag::orderBy('display_order', 'desc')->limit(9)->get();
+            $categories = Category::orderBy('display_order')->get();
+            $tags = Tag::orderBy('display_order')->limit(9)->get();
             $view->with('categories', $categories);
             $view->with('tags', $tags);
         });
