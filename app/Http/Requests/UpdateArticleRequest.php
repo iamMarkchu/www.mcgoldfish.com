@@ -26,12 +26,11 @@ class UpdateArticleRequest extends FormRequest
     {
         $id = $this->route('article');
         return [
-            'category_id' => 'present|integer',
-            'tag_ids' => 'present|array',
+            'category_id' => 'integer',
+            'tag_ids' => 'array',
             'title' => 'required|max:255|min:3|unique:articles,title,'. $id,
-            'content' => 'present',
-            'image' => 'present|max:255',
-            'display_order' => 'required|integer',
+            'image' => 'max:255',
+            'display_order' => 'integer',
             'source' => [
                 'required',
                 Rule::in('origin', 'reprint')

@@ -3,6 +3,14 @@
 ## 简介
 > 一个博客项目
 
+## 更新日志
+
+### 2018-07-21
+``` sql
+ALTER TABLE `blog_base`.`articles` CHANGE `category_id` `category_id` INT(10) UNSIGNED DEFAULT 0 NOT NULL COMMENT '外键，类别id', CHANGE `user_id` `user_id` INT(10) UNSIGNED DEFAULT 0 NOT NULL COMMENT '外键，用户id', CHANGE `title` `title` VARCHAR(255) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' NOT NULL COMMENT '文章标题', CHANGE `content` `content` TEXT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '文章内容，为markdown格式内容', CHANGE `display_order` `display_order` TINYINT(3) UNSIGNED DEFAULT 100 NOT NULL COMMENT '排序字段', CHANGE `status` `status` ENUM('active','republish','deleted') CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'republish' NOT NULL COMMENT '文章状态', CHANGE `source` `source` ENUM('origin','reprint') CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'reprint' NOT NULL COMMENT '文章来源', CHANGE `click_count` `click_count` INT(10) UNSIGNED DEFAULT 0 NOT NULL COMMENT '文章点击次数', CHANGE `vote_count` `vote_count` INT(10) UNSIGNED DEFAULT 0 NOT NULL COMMENT '点赞次数', CHARSET=utf8;
+ALTER TABLE `blog_base`.`votes` CHARSET=utf8; 
+```
+
 ## 开发计划
 1. 评论功能 (已完成, 2018-01-05)
 2. 优化article页面显示效果，注重移动端 (初步完成, 2018-01-05)

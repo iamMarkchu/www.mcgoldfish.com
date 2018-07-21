@@ -2,17 +2,24 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Repositories\TagRepository;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Tag;
+
 use App\Http\Requests\StoreTagRequest;
 
 class TagController extends Controller
 {
-    protected $tag;
 
-    public function __construct(Tag $tag)
+    /**
+     * @var TagRepository
+     */
+    private $tag;
+
+    public function __construct(TagRepository $tag)
     {
+
         $this->tag = $tag;
     }
     /**
@@ -24,21 +31,20 @@ class TagController extends Controller
     {
         $map = [];
         $result = $this->tag->fetchList($map, $request->input('pageSize', 30));
-        return response()->api($result);
+        return Response::api($result);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreTagRequest  $request
-     * @param  \App\Models\Tag $tag
      * @return \Illuminate\Http\Response
      */
     public function store(StoreTagRequest $request)
     {
         $data = $this->handleRequest($request);
-        $this->tag->createOne($data);
-        return response()->api($this->tag->id);
+        $this->tag->create($data);
+        return response()->api('创建成功!');
     }
 
     /**
@@ -49,8 +55,7 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        $tag = $this->tag->find($id);
-        return response()->api($tag);
+        return Response::api($this->tag->find($id));
     }
 
     /**
@@ -63,22 +68,11 @@ class TagController extends Controller
     public function update(Request $request, $id)
     {
         $data = $this->handleRequest($request);
-        $flag = $this->tag->updateItem($data, $id);
-        if ($flag)
-            return response()->api(['id' => $id]);
+        $tag = $this->tag->update($data, $id);
+        if ($tag)
+            return Response::api(['id' => $id]);
         else
-            return response()->api(['id' => $id], 500);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+            return Response::api(['id' => $id], 500);
     }
 
     protected function handleRequest(Request $request)

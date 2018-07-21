@@ -4,18 +4,15 @@ namespace App\Models;
 
 class Article extends BaseModel
 {
+    // 定义允许插入，更新的字段
     protected $fillable = [
         'category_id', 'title', 'content', 'image', 'display_order', 'status', 'source'
     ];
 
-    protected $queryable = [
+    // 定义允许搜索的字段
+    public $queryable = [
         'title', 'status', 'source', 'user_id'
     ];
-
-    public function getQueryable()
-    {
-        return $this->queryable;
-    }
 
     public function user()
     {
@@ -40,26 +37,5 @@ class Article extends BaseModel
     public function votes()
     {
         return $this->hasMany('App\Models\Vote');
-    }
-
-    public function fetchList($map, $pageSize=30)
-    {
-        $query = $this->setQuery($map);
-        return $this->where($query)->with(['user', 'tags'])->orderBy('id', 'desc')->paginate($pageSize);
-    }
-
-    protected function setQuery($map)
-    {
-        $query = [];
-        foreach ($map as $k => $v)
-        {
-            if ($k == 'title')
-            {
-                $query[] = ['title', 'like', '%'.$v.'%'];
-                continue;
-            }
-            $query[] = [$k, $v];
-        }
-        return $query;
     }
 }

@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $data['articles'] = Article::where(['status' => 'active'])->with('tags', 'user')->orderBy('created_at', 'desc')->paginate(15);
-        return view('page.home', $data);
+        $articles = Article::where(['status' => 'active'])->with('tags', 'user')->orderBy('created_at', 'desc')->paginate(15);
+        return view('page.home', compact('articles'));
     }
 }

@@ -54,6 +54,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Api', 'middleware' => ['auth'
         return upload($request->file($name), $name);
     });
 
+//    Route::put('articles/{id}', function () {
+//
+//    });
     // 不需要再次验证权限
     Route::resources([
         'categories' => 'CategoryController',
@@ -71,11 +74,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Api', 'middleware' => ['auth'
         ]);
     });
 
-    Route::put('/articles/{article}/change', 'ArticleController@change');
+    Route::put('/articles/{id}/change', 'ArticleController@change');
     Route::get('/categories-tree', 'CategoryController@tree');
-});
-
-Route::get('test', function () {
-   $str = "测试123123测";
-   echo generate_url($str);
 });

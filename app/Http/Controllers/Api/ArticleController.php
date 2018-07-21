@@ -6,22 +6,31 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
-use App\Models\Article;
-use App\Models\Vote;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
+use App\Repositories\ArticleRepository;
 
 class ArticleController extends Controller
 {
-    protected $article;
 
-    public function __construct(Article $article)
+    /**
+     * @var ArticleRepository
+     */
+    private $article;
+
+    /**
+     * ArticleController constructor.
+     * @param ArticleRepository $article
+     */
+    public function __construct(ArticleRepository $article)
     {
+
         $this->article = $article;
     }
+
     /**
      * Display a listing of the resource.
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Models\Article $article
      *
      * @return \Illuminate\Http\Response
      */
@@ -29,23 +38,20 @@ class ArticleController extends Controller
     {
         $map = $this->filterQuery($request);
         $result = $this->article->fetchList($map, $request->input('pageSize', 30));
-        return response()->api($result);
+        return Response::api($result);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreArticleRequest  $request
-     * @param  \App\Models\Article $article
+     * @param  \App\Http\Requests\StoreArticleRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreArticleRequest $request, Article $article)
+    public function store(StoreArticleRequest $request)
     {
-        $article = $this->fillFromRequest($request, $article);
-        $article->save();
-        // 保存 tag信息
-        $article->tags()->sync($request->tag_ids);
-        return response()->api($article);
+        $data = $this->handleRequest($request);
+        $this->article->create($data);
+        return response()->api('创建成功');
     }
 
     /**
@@ -56,8 +62,8 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $data = $this->article->with(['tags'])->find($id);
-        return response()->api($data);
+        $data = $this->article->find($id);
+        return Response::api($data);
     }
 
     /**
@@ -69,98 +75,90 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, $id)
     {
-        $data = $this->handleRequest($request);
-        $tagIds = $data['tag_ids'];
-        unset($data['tag_ids']);
 
-        if ($model = $this->article->updateItem($data, $id))
-            $model->tags()->sync($tagIds);
-        return response()->api($this->article);
+        $data = $this->handleRequest($request);
+        $this->article->update($data, $id);
+        return Response::api('修改成功!');
     }
 
     /**
-     * fill data from request
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Article $article
-     *
-     * @return \App\Models\Article $article
+     * 处理request参数
+     * @param Request $request
+     * @return array
      */
-    public function fillFromRequest(Request $request, Article $article)
-    {
-        $article->category_id = ($request->filled('category_id')) ? $request->category_id: 0;
-        $article->user_id = Auth::id();
-        $article->url_name = ($article->title !== $request->title) ? generate_url($request->title): $article->url_name;
-        $article->title = $request->title;
-        $article->content = $request->input('content');  // content属性被保留
-        $article->image = ($request->filled('image')) ? $request->image: '';
-        $article->display_order = $request->display_order;
-        $article->status = isset($article->status)? $article->status: 'republish';
-        $article->source = $request->source;
-        $article->click_count = 0;
-        $article->vote_count = 0;
-        return $article;
-    }
-
     protected function handleRequest(Request $request)
     {
         $data = $request->only(
             array_merge(
-                    $this->article->getFillable(),
-                    [ 'tag_ids' ]
-                )
+                $this->article->getFillable(),
+                ['tag_ids']
+            )
         );
-        $data['url_name'] = generate_url($request->title);
-        $data['content'] = $data['content'] ?? '';
-        $data['image'] = $data['image'] ?? '';
+        $data['url_name'] = generate_url($request->input('title'));
+        $data['user_id'] = Auth::id();
         return $data;
     }
 
+    /**
+     * 获取查询参数
+     * @param Request $request
+     * @return array
+     */
     protected function filterQuery(Request $request)
     {
         $data = $request->only(
             $this->article->getQueryable()
         );
-
         return filter_empty($data);
     }
 
     /**
      * change status
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Article $article
+     * @param integer $id
+     * @return string
      */
-    public function change(Request $request, Article $article)
+    public function change(Request $request, $id)
     {
-        $article->status = $request->status;
-        $article->save();
-        return response()->api($article);
+        if (!$request->filled('status'))
+            return Response::api('请提供要修改的状态');
+
+        $isChanged = $this->article->changeStatus($request->input('status'), $id);
+        if ($isChanged)
+            return Response::api('修改成功！');
+        else
+            return Response::api('修改失败！', 500);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function vote(Request $request)
     {
-        $id = $request->id;
-        $article = Article::find($id);
-        $action = $request->action;
-        $comment = Vote::where(['article_id' => $id, 'user_id' => Auth::id()])->first();
-        if($action == 'add')
-        {
-            if(empty($comment))
-            {
-                $comment = new Vote();
-                $comment->article_id = $id;
-                $comment->user_id = Auth::id();
-                $comment->save();
-                $article->increment('vote_count');
-            }
+        $articleId = $request->input('id', 0);
+        $article = $this->article->find($articleId);
+        if (! $article)
+            return Response::api('文章不存在!', 500);
+        $action = $request->input('action');
 
-        }else {
-            if(!empty($comment))
+        // 是否投过票
+        $isVoted = $this->article->isVoted($articleId, Auth::id());
+        if ($action == 'add') {
+            if ($isVoted)
             {
-                $comment->forceDelete();
-                $article->decrement('vote_count');
+                return Response::api('已经投过票了', 500);
+            } else {
+                $this->article->vote($articleId, Auth::id());
+                return Response::api('投票成功!');
             }
-
+        } else {
+            if ($isVoted) {
+                $this->article->deleteVote($articleId, Auth::id());
+                return Response::api('投票已撤销!');
+            } else {
+                return Response::api('还没有投过票!', 500);
+            }
         }
-        return response()->api('1');
     }
 }
