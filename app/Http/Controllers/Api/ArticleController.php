@@ -123,9 +123,9 @@ class ArticleController extends Controller
         if (!$request->filled('status'))
             return Response::api('请提供要修改的状态');
 
-        $isChanged = $this->article->changeStatus($request->input('status'), $id);
-        if ($isChanged)
-            return Response::api('修改成功！');
+        $article = $this->article->changeStatus($request->input('status'), $id);
+        if ($article)
+            return Response::api(['status' => $article->status]);
         else
             return Response::api('修改失败！', 500);
     }
