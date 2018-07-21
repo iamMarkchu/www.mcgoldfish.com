@@ -120,7 +120,7 @@ class ArticleRepository
 
         if ($model->save())
         {
-            $this->article->tags()->sync($tagIds);
+            $model->tags()->sync($tagIds);
             return $model;
         } else {
             return false;
