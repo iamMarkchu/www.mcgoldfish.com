@@ -1,6 +1,6 @@
 @extends('layouts.page')
 @section('main_content')
-<div class="col-md-9 col-sm-12 mark-content">
+<div class="col-md-12 col-sm-12 mark-content">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h1 class="text-center article-title">{{ $article->title }}</h1>
@@ -29,30 +29,6 @@
             @if($comments->has(0))
                 @include('block.comment-list', ['collection' => $comments->get(0)])
             @endif
-        </div>
-    </div>
-</div>
-<div class="col-md-3 hidden-xs hidden-sm mark-content">
-    @include('block.tag-panel')
-    <div class="article-menu">
-        <div class="panel panel-default">
-            <div class="panel-heading">目录</div>
-            <div class="panel-body">
-                <ul class="header-list">
-                    @foreach($headers as $index => $header)
-                        <li>
-                            <a href="#{{ $index }}">{{ $header['title'] }}</a>
-                            @if(isset($header['h3']))
-                                <ol class="sub-header-list">
-                                    @foreach($header['h3'] as $subIndex => $subHeader)
-                                        <li><a href="#{{ $subIndex }}">{{ $loop->index + 1 }}. {{ $subHeader }}</a></li>
-                                    @endforeach
-                                </ol>
-                            @endif
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
         </div>
     </div>
 </div>

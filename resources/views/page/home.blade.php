@@ -1,41 +1,34 @@
 @extends('layouts.page')
 @section('main_content')
-<div class="col-md-9 col-sm-12 mark-content">
-    <div class="panel panel-default">
-        <div class="panel-heading recommand-heading">
-            <h3 class="panel-title">推荐文章</h3>
+<div class="col-md-12 col-sm-12 mark-content">
+    @foreach($articles as $article)
+        <div class="panel panel-default home-article-block">
+            <div class="panel-heading">
+                <h3 class="panel-title"><a href="{{ route('article-v2', ['url_name' => $article->url_name ]) }}">{{ ucfirst($article->title) }}</a></h3>
+            </div>
+            <div class="panel-body">
+                {!! $article->preview !!}
+            </div>
+            <div class="panel-footer">
+                <div class="item-box pull-left">
+                    @if(count($article->tags) > 0)
+                        <span class="glyphicon glyphicon-tags tag-icon" aria-hidden="true"></span>
+                        @foreach($article->tags as $tag)
+                            <span class="tag-item">{{ ucfirst($tag->tag_name) }}</span>
+                        @endforeach
+                    @endif
+                    <span class="glyphicon glyphicon-user tag-icon" aria-hidden="true"></span>
+                    <span class="tag-item">{{ $article->user->name }}</span>
+                    <span class="glyphicon glyphicon-time tag-icon" aria-hidden="true"></span>
+                    <span class="tag-item">{{ diff_time($article->updated_at) }}</span>
+                </div>
+                <div class="item-box pull-right">
+                    <a href="{{ route('article-v2', ['url_name' => $article->url_name ]) }}" role="button">阅读全文 >></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
         </div>
-        <div class="list-group recommnad-list">
-            @foreach($articles as $article)
-                <a href="{{ route('article-v2', ['url_name' => $article->url_name ]) }}" class="list-group-item">
-                    <div class="info-box">
-                        <div class="list-group-row">
-                            <p class="title">{{ $article->title }}</p>
-                        </div>
-                        <div class="list-group-row">
-                            <ul class="meta-list">
-                                @if(!empty($article->tags))
-                                    <li class="meta-item">
-                                        @foreach($article->tags as $tag)
-                                            <span class="label label-success">{{ $tag->tag_name }}</span>
-                                        @endforeach
-                                    </li>
-                                @endif
-                                <li class="meta-item">{{ $article->user->name }}</li>
-                                <li class="meta-item">{{ diff_time($article->updated_at) }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                </a>
-            @endforeach
-        </div>
-        <div class="panel-body">
-            {{-- 分页 --}}
-            {{ $articles->links() }}
-        </div>
-    </div>
-</div>
-<div class="col-md-3 mark-content hidden-xs">
-    @include('block.tag-panel')
+    @endforeach
+    {{ $articles->links() }}
 </div>
 @endsection

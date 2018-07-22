@@ -7,7 +7,7 @@
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
 // Prismjs
-@import "~prismjs/themes/prism.css";
+// @import "~prismjs/themes/prism.css";
 
 $ck-color: #2ab27b;
 
@@ -237,7 +237,7 @@ footer {
 }
 
 .blog-navbar {
-  border-top: 3px solid #2ab27b;
+  //border-top: 3px solid #2ab27b;
   border-bottom: 1px solid #f1f1f1;
 }
 
@@ -247,4 +247,71 @@ footer {
 
 .recommnad-list> a {
   padding: 1rem 1.5rem;
+}
+
+// home-article-block
+.home-article-block {
+
+}
+.home-article-block>.panel-heading>h3 {
+  color: #555;
+  font-size: 20px;
+  font-weight: bold;
+}
+.home-article-block img {
+  clear: both;
+  display: block;
+  margin: auto;
+  max-width: 760px;
+  border: 3px solid #EEE;
+}
+.home-article-block p {
+  line-height: 2;
+}
+.home-article-block>.panel-footer {
+  border-top: 1px solid #f5f8fa;
+}
+
+// tag-box
+.item-box{
+  display: inline-block;
+}
+.item-box>.tag-icon {
+  color: #999;
+}
+.item-box>.tag-item {
+  margin-right: 1rem;
+  padding: 5px;
+  // border: 1px solid #e0e0e0;
+  color: #999;
+  border-radius: 0;
+}
+
+// banner
+#banner {
+  margin-top: -22px;
+  margin-bottom: 22px;
+  background: #00F260;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #0575E6, #00F260);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #0575E6, #00F260); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  //height: 247px;
+  color: #e0e0e0;
+}
+#banner::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: url(/img/bs-docs-masthead-pattern.png) repeat center center;
+  opacity: .6;
+}
+#banner> .banner-container {
+  padding-bottom: 30px;
+  padding-top: 30px;
+}
+#banner h1 {
+  font-size: 70px;
 }

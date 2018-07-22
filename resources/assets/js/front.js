@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import Cookies from 'js-cookie';
-import './highlight.config';
+// import './highlight.config';
 import lazyload from 'lazyload';
 
 export default {

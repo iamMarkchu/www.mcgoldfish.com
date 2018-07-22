@@ -1,11 +1,13 @@
 
 // Body
-$body-bg: #f5f8fa;
-$font-family-base: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+$body-bg: rgb(237, 244, 246);
 
 // Grid System
 $grid-gutter-width:         15px;
-$container-large-desktop:      (965px + $grid-gutter-width);
+$container-large-desktop:      (800px + $grid-gutter-width);
+
+// Link
+$link-color: #999;
 // Borders
 $laravel-border-color: darken($body-bg, 10%);
 $list-group-border: $laravel-border-color;
@@ -13,6 +15,7 @@ $navbar-default-border: #fff;
 $panel-default-border: #f6f6f6;
 $panel-inner-border: #f6f6f6;
 $panel-inner-border: $laravel-border-color;
+$panel-footer-bg: #fff;
 $list-group-border: #f6f6f6;
 
 // Brands
@@ -46,3 +49,10 @@ $panel-border-radius: 0;
 
 // Lists
 $list-group-hover-bg: #f6f6f6;
+
+// Jumbotron
+$jumbotron-bg: #fff;
+
+// Page
+$pagination-active-bg: #2ab27b;
+$pagination-border: 1px solid #2ab27b;
