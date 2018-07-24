@@ -5,6 +5,7 @@ import lazyload from 'lazyload';
 
 export default {
     init: function() {
+        alert(1);
         this.initAjax();
         this.initPlugins();
         this.bindAction();

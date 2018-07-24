@@ -17,7 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['namespace' => 'Api', 'middleware' => ['auth:api'],], function(){
+Route::group(['namespace' => 'Api', 'middleware' => ['auth:api']], function(){
     Route::resources([
         'articles' => 'ArticleController',
         'tags' => 'TagController',
@@ -27,11 +27,12 @@ Route::group(['namespace' => 'Api', 'middleware' => ['auth:api'],], function(){
     ]);
     Route::put('/articles/{article}/change', 'ArticleController@change');
     Route::put('/comments/{comment}/change', 'CommentController@change');
+
+
     Route::post('upload', function(Request $request){
         $path = $request->file('uploadFile')->store('public/image');
         return Storage::url($path);
     });
-    Route::delete('upload', function(Request $request){
-        echo $request->uploadFile;
-    });
+
+    Route::post('upload/qiniu', 'UploadController@qiniu');
 });

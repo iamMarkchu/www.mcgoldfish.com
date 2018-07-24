@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Http\Request;
+use App\Models\Image;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,6 +54,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Api', 'middleware' => ['auth'
         $name = 'file';
         return upload($request->file($name), $name);
     });
+
+    // 七牛
+    Route::post('/upload/qiniu', 'UploadController@qiniu');
 
 //    Route::put('articles/{id}', function () {
 //

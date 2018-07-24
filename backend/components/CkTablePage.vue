@@ -15,7 +15,7 @@
                         :is="colConfig.component"
                         :col-config="colConfig">
                     </component>
-                    <el-table-column v-else v-bind="colConfig" align="center" :width="getWidth(colConfig)"></el-table-column>
+                    <el-table-column v-else v-bind="colConfig" align="center"></el-table-column>
                 </template>
             </el-table>
         </div>

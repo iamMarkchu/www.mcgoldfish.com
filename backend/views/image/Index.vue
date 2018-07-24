@@ -15,7 +15,6 @@
         created() {
             this.colData = [
                 { prop: 'id', label: 'ID' },
-                { prop: 'user_id', label: '用户ID' },
                 { prop: 'name', label: '图片名字' },
                 { prop: 'url_name', label: '地址' },
                 { prop: 'display_order', label: '排序' },

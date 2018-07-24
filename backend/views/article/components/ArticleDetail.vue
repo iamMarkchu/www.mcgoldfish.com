@@ -55,7 +55,7 @@
     import CkUpload from "../../../components/CkUpload"
     import { fetch, add, update } from "../../../api/articles"
     import CkTag from "../../../components/CkTag"
-    import SimpleMDE from "simplemde"
+    // import SimpleMDE from "simplemde"
 
     const form = {
         category_id: 0,
@@ -160,5 +160,5 @@
 </script>
 
 <style scoped>
-    @import "~simplemde/src/css/simplemde.css";
+    /*@import "~simplemde/src/css/simplemde.css";*/
 </style>
